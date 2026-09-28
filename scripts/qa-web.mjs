@@ -25,13 +25,42 @@ function traverse(name,choose){
  assert.equal(M.validate(JSON.parse(JSON.stringify(state))).node,state.node,`${name}: save replay`);
  return {state,steps,kind:S.nodes[state.node].kind,chapter:S.nodes[state.node].chapter||null};
 }
-const active=traverse('active',n=>n.key==='ch28_departure'?'stay':n.key.startsWith('offer-')?'read':n.options[0].id);
-const left=traverse('left',n=>n.key==='ch28_departure'?'leave':n.key.startsWith('offer-')?'skip':n.options[0].id);
-assert.equal(active.kind,'pending');assert.equal(active.chapter,33);
-assert.equal(left.kind,'complete');assert.equal(S.nodes[left.state.node].ending,'E');
-assert.equal(active.state.flags.ch32_last_packet_received,true);
-assert.equal(active.state.flags.ch32_new_inputs_stopped,true);
-assert.equal(active.state.flags.obligations_sent,undefined);
+const defaults={ch28_departure:'stay'};
+const route=(name,overrides)=>traverse(name,n=>overrides[n.key]||defaults[n.key]||(n.key.startsWith('offer-')?'skip':n.options[0].id));
+const routes={
+ A:route('A',{}),
+ B:route('B',{device_policy:'obey'}),
+ C:route('C',{ch26_external_route:'hold',ch29_roster_update:'families'}),
+ D:route('D',{device_policy:'watch'}),
+ E:route('E',{ch28_departure:'leave'}),
+ F:route('F',{ch26_external_route:'hold',ch29_roster_update:'families',ch31_delegation:'central',ch31_ground_response:'wait',ch33_ground_response:'wait'})
+};
+const allSides=traverse('all side stories',n=>n.key.startsWith('offer-')?'read':defaults[n.key]||n.options[0].id);
+assert.equal(S.nodes[allSides.state.node].ending,'A');
+for(let i=1;i<=12;i++)assert.ok(allSides.state.trail.some(id=>id.startsWith(`side-s${String(i).padStart(2,'0')}.`)),`missing side s${i}`);
+let previousTime=0,previousScene='';
+for(const id of allSides.state.trail){
+ const n=S.nodes[id];
+ if(n?.kind!=='text'||!id.endsWith('.p0')||id.startsWith('end-'))continue;
+ const clock=/^(\d{2}):(\d{2})/.exec(n.time||'');
+ if(!/^\d{4}-\d{2}-\d{2}$/.test(n.date||'')||!clock)continue;
+ const time=Date.parse(`${n.date}T${clock[1]}:${clock[2]}:00Z`);
+ assert.ok(time>=previousTime,`time reversal: ${previousScene} -> ${id} (${n.date} ${n.time})`);
+ previousTime=time;previousScene=id;
+}
+assert.equal(S.nodes['ch1.paper_at_door.p2'].art,'ch01-paper_at_door-02');
+assert.equal(S.nodes['ch1.teacher_rollcall.p3'].art,'ch01-teacher_rollcall-02');
+const familyLoss=route('F family loss',{ch26_external_route:'hold',ch29_roster_update:'workers',ch31_delegation:'central',ch31_ground_response:'wait',ch33_ground_response:'wait'});
+assert.equal(S.nodes[familyLoss.state.node].ending,'F');
+assert.equal(familyLoss.state.flags.ch33_loss_family,'child');
+for(const [ending,r] of Object.entries(routes)){
+ assert.equal(r.kind,'complete',`${ending}: incomplete route`);
+ assert.equal(S.nodes[r.state.node].ending,ending,`${ending}: wrong ending`);
+ if(ending!=='E')assert.equal(r.state.flags.obligations_sent,true,`${ending}: unsent obligation`);
+}
+assert.equal(routes.A.state.flags.ch32_last_packet_received,true);
+assert.equal(routes.A.state.flags.ch32_new_inputs_stopped,true);
+assert.equal(routes.F.state.flags.ch33_loss_worker,'ma');
 for(const a of Object.values(S.art))if(a.status==='approved')assert.ok(fs.existsSync(path.join(root,a.path)),`missing approved art ${a.path}`);
 const server=http.createServer((req,res)=>{
  const pathname=decodeURIComponent(new URL(req.url,'http://localhost').pathname);
@@ -42,7 +71,7 @@ const server=http.createServer((req,res)=>{
  fs.createReadStream(target).on('error',()=>res.writeHead(404).end()).once('open',()=>res.writeHead(200,{'content-type':mime})).pipe(res);
 });
 await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
-const url=`http://127.0.0.1:${server.address().port}/`;
+const url=process.env.ZERO_PERIOD_URL||`http://127.0.0.1:${server.address().port}/`;
 const browser=await chromium.launch({executablePath:'C:/Program Files/Google/Chrome/Application/chrome.exe',headless:true});
 const results=[],errors=[];
 try{
@@ -69,7 +98,7 @@ try{
   assert.match(await page.locator('#panel-body').innerText(),/已读记录/);
   await page.getByRole('button',{name:'关闭窗口'}).click();
   await page.getByRole('button',{name:'目录',exact:true}).click();
-  assert.match(await page.locator('#panel-body').innerText(),/仍在制作/);
+  assert.match(await page.locator('#panel-body').innerText(),/36 · 明天仍要点名/);
   await page.getByRole('button',{name:'关闭窗口'}).click();
   if(width===1440){
    await page.getByRole('button',{name:'存档',exact:true}).click();
@@ -84,9 +113,9 @@ try{
    await page.waitForFunction(()=>document.querySelector('#panel-title')?.textContent==='导入存档');
    await page.locator('[data-action=import-confirm]').click();
    assert.equal(await page.locator('.story-text').innerText(),second);
-   await page.evaluate(([key,raw])=>localStorage.setItem(key,JSON.stringify(raw)),[M.key,active.state]);
+   await page.evaluate(([key,raw])=>localStorage.setItem(key,JSON.stringify(raw)),[M.key,routes.A.state]);
    await page.reload();await page.getByRole('button',{name:'继续阅读'}).click();
-   assert.match(await page.locator('.story-text').innerText(),/仍在制作/);
+   assert.match(await page.locator('.story-text').innerText(),/本路线完/);
    await page.getByRole('button',{name:'笔记',exact:true}).click();
    assert.ok(await page.locator('[data-evidence]').count()>0);
    await page.getByRole('button',{name:'关闭窗口'}).click();
@@ -104,7 +133,7 @@ try{
   await context.close();
  }
  assert.deepEqual(errors,[]);
- const report={testedAt:new Date().toISOString(),routes:{active:{steps:active.steps,terminal:active.kind,chapter:active.chapter},left:{steps:left.steps,terminal:left.kind,ending:'E'}},results,errors};
+ const report={testedAt:new Date().toISOString(),routes:Object.fromEntries(Object.entries(routes).map(([ending,r])=>[ending,{steps:r.steps,terminal:r.kind,obligationsSent:r.state.flags.obligations_sent===true}])),sideStoriesRead:12,familyLossVariant:true,results,errors};
  fs.mkdirSync(path.join(root,'qa'),{recursive:true});fs.writeFileSync(path.join(root,'qa/web-test.json'),JSON.stringify(report,null,2));
  console.log(JSON.stringify(report,null,2));
 }finally{await browser.close();await new Promise(resolve=>server.close(resolve));}

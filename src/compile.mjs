@@ -4,8 +4,13 @@ export function compileStory({chapters=[],sideStories=[],endings=[],research=[],
  const stamp=(id,doc,scene)=>({chapter:Number(doc.id)||doc.afterChapter||0,title:doc.title,part:doc.part||Math.ceil((Number(doc.id)||doc.afterChapter||1)/4),date:doc.date||'',pov:scene.pov||doc.pov||'沈岑',location:scene.location||'',time:scene.time||'',scene:scene.title||doc.title,...id});
  function paras(items,next,prefix,doc,scene,shots){
   let first=next;for(let i=items.length-1;i>=0;i--){const p=items[i],id=prefix+'.p'+i;
-   const picture=shots[Math.min(shots.length-1,Math.floor(i*Math.max(1,shots.length)/items.length))];
-   add(stamp({id,kind:'text',speaker:p.speaker||'旁白',text:p.text,art:picture?.id||null,next:first,when:p.when||null},doc,scene));first=id;
+   const reply=prefix.includes('.option');
+   const index=reply?shots.length-1:scene.artMap?.[i]??Math.min(shots.length-1,Math.floor(i*Math.max(1,shots.length)/items.length));
+   if(shots.length&&(!Number.isInteger(index)||index<0||index>=shots.length))throw Error('Invalid art map '+id);
+   if(!shots.length&&scene.artMap?.[i]!==undefined)throw Error('Art map without shots '+id);
+   const picture=p.art||shots[index]?.id||null;
+   if(picture&&!art[picture])throw Error('Missing paragraph art '+picture+' from '+id);
+   add(stamp({id,kind:'text',speaker:p.speaker||'旁白',text:p.text,art:picture,next:first,when:p.when||null},doc,scene));first=id;
   }return first;
  }
  function scenes(doc,next,prefix){
@@ -45,10 +50,11 @@ export function compileStory({chapters=[],sideStories=[],endings=[],research=[],
   endingEntries[e.id]=paras(e.paragraphs||[],after,'end-'+e.id,doc,scene,e.art||[]);
  }
  add({id:'resolve-ending',kind:'ending-router',endings:endingEntries});
+ add({id:'finalize-route',kind:'resolve',next:'resolve-ending'});
  for(let num=36;num>=1;num--){
   const doc=chapters.find(c=>Number(c.id)===num);
   if(!doc){add({id:'ch'+num+'.start',kind:'pending',chapter:num,title:plan.chapters[num-1],text:'本章仍在制作，开发版本在此暂停。'});continue;}
-  const target=num===36?'resolve-ending':'ch'+(num+1)+'.start';
+  const target=num===36?'finalize-route':'ch'+(num+1)+'.start';
   let after=target;
   for(const side of sideStories.filter(s=>s.afterChapter===num).reverse()){
    const body=scenes(side,after,'side-'+side.id),offer='offer-'+side.id;
@@ -57,7 +63,6 @@ export function compileStory({chapters=[],sideStories=[],endings=[],research=[],
   if(num===28)after=add({id:'ch28.departure',kind:'departure-router',yes:endingEntries.E||'resolve-ending',no:after});
   const exit=add(stamp({id:'ch'+num+'.end',kind:'chapter-end',text:'第'+num+'章完',next:after},doc,{}));
   let first=scenes(doc,exit,'ch'+num);
-  if(num===36)first=add({id:'ch36.resolve',kind:'resolve',next:first});
   add({id:'ch'+num+'.start',kind:'apply',next:first});chaptersById[num]={id:num,title:doc.title,part:doc.part,date:doc.date,status:doc.status,entry:'ch'+num+'.start'};
  }
  for(const n of Object.values(nodes)){

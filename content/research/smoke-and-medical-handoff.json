@@ -1,0 +1,14 @@
+{
+  "id": "smoke-and-medical-handoff",
+  "title": "烟雾伤害与医疗交接",
+  "unlockChapter": 33,
+  "dateScope": "modern",
+  "paragraphs": [
+    "现代读者说明：末段人物一时能说话或走动，不能据此认定吸入烟雾后已经安全。烟雾可能同时造成气道损伤和全身性中毒，某些气道症状会在数小时内出现。小说让受影响者由急救和医院评估，并在之后接收正式消息，不把同伴观察写成诊断。",
+    "一氧化碳中毒表现多样，需结合暴露经过、检查和检测判断。作品没有给马师傅或小满虚构具体化验值、治疗方案或必然结局；不同路线里的伤情结果以医院通知和亲历记录为准。"
+  ],
+  "sources": [
+    {"url":"https://www.msdmanuals.com/professional/injuries-poisoning/burns/smoke-inhalation","description":"默沙东诊疗手册专业版：烟雾吸入可造成气道和全身影响，部分症状可能延后出现。"},
+    {"url":"https://www.cdc.gov/carbon-monoxide/hcp/clinical-guidance/index.html","description":"美国 CDC 面向医务人员的一氧化碳中毒临床指导：症状、诊断与其他烟雾伤害的鉴别。"}
+  ]
+}

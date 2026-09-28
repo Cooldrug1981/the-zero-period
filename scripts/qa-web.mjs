@@ -101,19 +101,19 @@ try{
   await page.getByRole('button',{name:'目录',exact:true}).click();
   assert.match(await page.locator('#panel-body').innerText(),/36 · 明天仍要点名/);
   await page.getByRole('button',{name:'关闭窗口'}).click();
+  await page.getByRole('button',{name:'存档',exact:true}).click();
+  const downloadPromise=page.waitForEvent('download');
+  await page.locator('[data-action=export]').click();
+  const download=await downloadPromise;
+  const exported=JSON.parse(fs.readFileSync(await download.path(),'utf8'));
+  assert.equal(M.validate(exported).node,exported.node);
+  await page.getByRole('button',{name:'关闭窗口'}).click();
+  await page.getByRole('button',{name:'存档',exact:true}).click();
+  await page.locator('#import-file').setInputFiles({name:'save.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(exported))});
+  await page.waitForFunction(()=>document.querySelector('#panel-title')?.textContent==='导入存档');
+  await page.locator('[data-action=import-confirm]').click();
+  assert.equal(await page.locator('.story-text').innerText(),second);
   if(width===1440){
-   await page.getByRole('button',{name:'存档',exact:true}).click();
-   const downloadPromise=page.waitForEvent('download');
-   await page.locator('[data-action=export]').click();
-   const download=await downloadPromise;
-   const exported=JSON.parse(fs.readFileSync(await download.path(),'utf8'));
-   assert.equal(M.validate(exported).node,exported.node);
-   await page.getByRole('button',{name:'关闭窗口'}).click();
-   await page.getByRole('button',{name:'存档',exact:true}).click();
-   await page.locator('#import-file').setInputFiles({name:'save.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(exported))});
-   await page.waitForFunction(()=>document.querySelector('#panel-title')?.textContent==='导入存档');
-   await page.locator('[data-action=import-confirm]').click();
-   assert.equal(await page.locator('.story-text').innerText(),second);
    await page.evaluate(([key,raw])=>localStorage.setItem(key,JSON.stringify(raw)),[M.key,routes.A.state]);
    await page.reload();await page.getByRole('button',{name:'继续阅读'}).click();
    assert.match(await page.locator('.story-text').innerText(),/本路线完/);
@@ -151,7 +151,7 @@ try{
     browserRoutes[ending]=steps;
    }
   }
-  results.push({width,autosave:true,manualSave:true,overflow:false,importExport:width===1440});
+  results.push({width,autosave:true,manualSave:true,overflow:false,importExport:true});
   await context.close();
  }
  assert.deepEqual(errors,[]);

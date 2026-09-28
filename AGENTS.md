@@ -1,5 +1,9 @@
 # The Zero Period production
 
+## Latest user instruction: first-person formal edition
+
+The protagonist's narration, inner thoughts, scene prompts, and evidence notes now use first person (我、我的、我们). Direct dialogue in which one character addresses another naturally keeps 你. The existing full-edition targets and editorial/art approval gates remain in force; an alpha build must not be relabeled as the formal edition merely because its point of view changed. HTML and GitHub Pages are the active delivery scope. EXE/Electron work remains paused.
+
 ## Latest user instruction, 2026-09-28
 
 Deliver HTML and the public GitHub Pages version only. Pause ALL desktop/EXE building, testing, dependency upgrades and packaging; preserve existing desktop files without working on them. Conserve tokens: continue from existing files and audit summaries, do not rewrite completed chapters or regenerate existing artwork without an identified defect. Start by reading docs/HTML-HANDOFF.md. The earlier dual-platform goal below is superseded for active delivery. Writing agents have been asked to checkpoint and stop to avoid concurrent edits with the desktop-app handoff.

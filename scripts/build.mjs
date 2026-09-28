@@ -8,7 +8,7 @@ function docs(dir){const p=path.join(root,'content',dir);return fs.existsSync(p)
 const plan=JSON.parse(read('production.json'));
 const catalog=fs.existsSync(path.join(root,'art/catalog.json'))?JSON.parse(read('art/catalog.json')):{entries:{}};
 const S=compileStory({chapters:docs('chapters'),sideStories:docs('side-stories'),endings:docs('endings'),research:docs('research'),catalog,plan});
-S.releaseReady=false;S.buildLabel='开发预览版 0.3.0-alpha.1 · 制作中';
+S.releaseReady=false;S.buildLabel='开发预览版 0.4.0-alpha.1 · 制作中';
 fs.mkdirSync(path.join(root,'web'),{recursive:true});
 fs.writeFileSync(path.join(root,'web/story.js'),'window.ZERO_PERIOD='+JSON.stringify(S).replace(/</g,'\\u003c')+';\n');
 fs.writeFileSync(path.join(root,'web/app.js'),read('src/model.mjs').replace(/export function /g,'function ')+'\n'+read('src/app.js'));

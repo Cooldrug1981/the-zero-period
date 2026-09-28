@@ -10,7 +10,7 @@ export function compileStory({chapters=[],sideStories=[],endings=[],research=[],
    if(!shots.length&&scene.artMap?.[i]!==undefined)throw Error('Art map without shots '+id);
    const picture=p.art||shots[index]?.id||null;
    if(picture&&!art[picture])throw Error('Missing paragraph art '+picture+' from '+id);
-   add(stamp({id,kind:'text',speaker:p.speaker||'旁白',text:p.text,art:picture,next:first,when:p.when||null},doc,scene));first=id;
+   add(stamp({id,kind:'text',speaker:p.speaker==='旁白'||!p.speaker?(scene.pov||doc.pov||'沈岑'):p.speaker,text:p.text,art:picture,next:first,when:p.when||null},doc,scene));first=id;
   }return first;
  }
  function scenes(doc,next,prefix){
@@ -27,7 +27,7 @@ export function compileStory({chapters=[],sideStories=[],endings=[],research=[],
      add({id:effect,kind:'apply',set:o.set||{},next:body});
      return{id:o.id,label:o.label,detail:o.detail||'',next:effect,when:o.when||null};
     });
-    after=add(stamp({id:base+'.choice',kind:'choice',speaker:doc.pov||'沈岑',text:choice.prompt||'你准备怎么做？',key:choice.key,options,art:shots.at(-1)?.id||null},doc,scene));
+    after=add(stamp({id:base+'.choice',kind:'choice',speaker:doc.pov||'沈岑',text:choice.prompt||'我接下来怎么做？',key:choice.key,options,art:shots.at(-1)?.id||null},doc,scene));
    }
    const grants=[];
    for(const e of scene.evidence||[]){if(evidence[e.id]&&JSON.stringify(evidence[e.id])!==JSON.stringify(e))throw Error('Conflicting evidence '+e.id);evidence[e.id]=e;grants.push(e.id);}

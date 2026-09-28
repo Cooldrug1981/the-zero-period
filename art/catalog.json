@@ -53,6 +53,60 @@
       "status": "approved",
       "promptPath": "art/prompts/ch01-teacher_rollcall.json",
       "review": "Four distinct scene compositions visually inspected for era, anatomy, continuity and readable clue safety."
+    },
+    {
+      "id": "ch02-second_sheet",
+      "path": "art/masters/ch02-second_sheet.png",
+      "webPath": "web/assets/ch02-second_sheet.webp",
+      "sha256": "5dc95fde22d5159717b3d82529fb7ff87e36526e4d0e84318588b5896bddafed",
+      "status": "approved",
+      "promptPath": "art/prompts/ch02-second_sheet.json",
+      "review": "Four distinct scene compositions visually inspected for era, anatomy, continuity and readable clue safety."
+    },
+    {
+      "id": "ch02-stopped_clocks-v2",
+      "path": "art/masters/ch02-stopped_clocks-v2.png",
+      "webPath": "web/assets/ch02-stopped_clocks-v2.webp",
+      "sha256": "bb34ef4bbe9a080ca6fc3a6ddd42c0eaa9dbc69c339b4eaeca1a432ccb90a803",
+      "status": "approved",
+      "promptPath": "art/prompts/ch02-stopped_clocks-v2.json",
+      "review": "Four distinct scene compositions visually inspected for era, anatomy, continuity and readable clue safety."
+    },
+    {
+      "id": "ch02-inside_room",
+      "path": "art/masters/ch02-inside_room.png",
+      "webPath": "web/assets/ch02-inside_room.webp",
+      "sha256": "0d09c523af456c2dcb00dd8040e99347fef440bb491bf199d508382ea4f9e8c3",
+      "status": "approved",
+      "promptPath": "art/prompts/ch02-inside_room.json",
+      "review": "Four distinct scene compositions visually inspected for era, anatomy, continuity and readable clue safety."
+    },
+    {
+      "id": "ch02-two_views",
+      "path": "art/masters/ch02-two_views.png",
+      "webPath": "web/assets/ch02-two_views.webp",
+      "sha256": "38c76429c6389607e86d4f4e27f9422804d1f0c47c5ccfbff54d031aeda93c02",
+      "status": "approved",
+      "promptPath": "art/prompts/ch02-two_views.json",
+      "review": "Four distinct scene compositions visually inspected for era, anatomy, continuity and readable clue safety."
+    },
+    {
+      "id": "ch02-doorway_worker",
+      "path": "art/masters/ch02-doorway_worker.png",
+      "webPath": "web/assets/ch02-doorway_worker.webp",
+      "sha256": "a2a6c23898cdbe1f449b32e72893ba3d8bd28a816a63a46fa5b8bab57ffd16fa",
+      "status": "approved",
+      "promptPath": "art/prompts/ch02-doorway_worker.json",
+      "review": "Four distinct scene compositions visually inspected for era, anatomy, continuity and readable clue safety."
+    },
+    {
+      "id": "ch02-after_bell",
+      "path": "art/masters/ch02-after_bell.png",
+      "webPath": "web/assets/ch02-after_bell.webp",
+      "sha256": "ea56fbf3fc0058c7b35e9ce8082f11eb3dff672284977bdabb0367678048acbb",
+      "status": "approved",
+      "promptPath": "art/prompts/ch02-after_bell.json",
+      "review": "Four distinct scene compositions visually inspected for era, anatomy, continuity and readable clue safety."
     }
   ],
   "entries": {
@@ -318,6 +372,270 @@
       "position": "100% 100%",
       "size": "200% 200%",
       "alt": "点名册铅笔勾与方敏压页手特写，沈岑拿水杯经过，许照跟随；具体43人数交给文字层。",
+      "panelIndex": 3
+    },
+    "ch02-second_sheet-01": {
+      "id": "ch02-second_sheet-01",
+      "shot": "低机位近景，蓝白校服少年的指甲勾住连续纸孔，湿水磨石上第二张纸撞到少女白鞋，广播室门底透冷白光。",
+      "masterId": "ch02-second_sheet",
+      "status": "approved",
+      "path": "web/assets/ch02-second_sheet.webp",
+      "position": "0% 0%",
+      "size": "200% 200%",
+      "alt": "低机位近景，蓝白校服少年的指甲勾住连续纸孔，湿水磨石上第二张纸撞到少女白鞋，广播室门底透冷白光。",
+      "panelIndex": 0
+    },
+    "ch02-second_sheet-02": {
+      "id": "ch02-second_sheet-02",
+      "shot": "少女与额角纱布少年在窗台展开黑白粗格位图，图中仅模糊人形和立柱轮廓，不绘可识别脸，纸头文字留排版层。",
+      "masterId": "ch02-second_sheet",
+      "status": "approved",
+      "path": "web/assets/ch02-second_sheet.webp",
+      "position": "100% 0%",
+      "size": "200% 200%",
+      "alt": "少女与额角纱布少年在窗台展开黑白粗格位图，图中仅模糊人形和立柱轮廓，不绘可识别脸，纸头文字留排版层。",
+      "panelIndex": 1
+    },
+    "ch02-second_sheet-03": {
+      "id": "ch02-second_sheet-03",
+      "shot": "从二层钢窗斜看雨夜北楼门厅，灯下空椅挂旧毛巾，屋檐遮住部分台阶，窗上叠着沈岑模糊倒影。",
+      "masterId": "ch02-second_sheet",
+      "status": "approved",
+      "path": "web/assets/ch02-second_sheet.webp",
+      "position": "0% 100%",
+      "size": "200% 200%",
+      "alt": "从二层钢窗斜看雨夜北楼门厅，灯下空椅挂旧毛巾，屋檐遮住部分台阶，窗上叠着沈岑模糊倒影。",
+      "panelIndex": 2
+    },
+    "ch02-second_sheet-04": {
+      "id": "ch02-second_sheet-04",
+      "shot": "棕色开衫方敏侧身试广播室钥匙，沈岑按住自己本子，许照提纸站旁边，室内白光仅从窄门缝透出。",
+      "masterId": "ch02-second_sheet",
+      "status": "approved",
+      "path": "web/assets/ch02-second_sheet.webp",
+      "position": "100% 100%",
+      "size": "200% 200%",
+      "alt": "棕色开衫方敏侧身试广播室钥匙，沈岑按住自己本子，许照提纸站旁边，室内白光仅从窄门缝透出。",
+      "panelIndex": 3
+    },
+    "ch02-stopped_clocks-01": {
+      "id": "ch02-stopped_clocks-01",
+      "shot": "长焦走廊两只校钟前后重叠，学生端水杯站住，灯光平稳；秒针停滞由文字描述不靠模糊时针。",
+      "masterId": "ch02-stopped_clocks-v2",
+      "status": "approved",
+      "path": "web/assets/ch02-stopped_clocks-v2.webp",
+      "position": "0% 0%",
+      "size": "200% 200%",
+      "alt": "长焦走廊两只校钟前后重叠，学生端水杯站住，灯光平稳；秒针停滞由文字描述不靠模糊时针。",
+      "panelIndex": 0
+    },
+    "ch02-stopped_clocks-02": {
+      "id": "ch02-stopped_clocks-02",
+      "shot": "梁弥咬发绳从帆布包掏旧机械表，窗台上并放沈岑本子和许照电子表，皮表带有裂纹。",
+      "masterId": "ch02-stopped_clocks-v2",
+      "status": "approved",
+      "path": "web/assets/ch02-stopped_clocks-v2.webp",
+      "position": "100% 0%",
+      "size": "200% 200%",
+      "alt": "梁弥咬发绳从帆布包掏旧机械表，窗台上并放沈岑本子和许照电子表，皮表带有裂纹。",
+      "panelIndex": 1
+    },
+    "ch02-stopped_clocks-03": {
+      "id": "ch02-stopped_clocks-03",
+      "shot": "方敏在广播室接黑色有线电话，视线投向上方钟盒，身后线路沿深绿墙裙伸出。",
+      "masterId": "ch02-stopped_clocks-v2",
+      "status": "approved",
+      "path": "web/assets/ch02-stopped_clocks-v2.webp",
+      "position": "0% 100%",
+      "size": "200% 200%",
+      "alt": "方敏在广播室接黑色有线电话，视线投向上方钟盒，身后线路沿深绿墙裙伸出。",
+      "panelIndex": 2
+    },
+    "ch02-stopped_clocks-04": {
+      "id": "ch02-stopped_clocks-04",
+      "shot": "课间学生从教室涌入走廊，三位主角退靠钢窗，沈岑帮梁弥扣歪掉的书包扣，正常温暖人群打破停顿。",
+      "masterId": "ch02-stopped_clocks-v2",
+      "status": "approved",
+      "path": "web/assets/ch02-stopped_clocks-v2.webp",
+      "position": "100% 100%",
+      "size": "200% 200%",
+      "alt": "课间学生从教室涌入走廊，三位主角退靠钢窗，沈岑帮梁弥扣歪掉的书包扣，正常温暖人群打破停顿。",
+      "panelIndex": 3
+    },
+    "ch02-inside_room-01": {
+      "id": "ch02-inside_room-01",
+      "shot": "从门口看狭小广播室，双桌、卡座、旧CRT和地上扇形连续纸，纸路真实通向门槛，不画幽灵。",
+      "masterId": "ch02-inside_room",
+      "status": "approved",
+      "path": "web/assets/ch02-inside_room.webp",
+      "position": "0% 0%",
+      "size": "200% 200%",
+      "alt": "从门口看狭小广播室，双桌、卡座、旧CRT和地上扇形连续纸，纸路真实通向门槛，不画幽灵。",
+      "panelIndex": 0
+    },
+    "ch02-inside_room-02": {
+      "id": "ch02-inside_room-02",
+      "shot": "额角纱布许照坐不平的折叠椅，指铁柜新擦痕，方敏用手电检查内侧杂物间，空间拥挤。",
+      "masterId": "ch02-inside_room",
+      "status": "approved",
+      "path": "web/assets/ch02-inside_room.webp",
+      "position": "100% 0%",
+      "size": "200% 200%",
+      "alt": "额角纱布许照坐不平的折叠椅，指铁柜新擦痕，方敏用手电检查内侧杂物间，空间拥挤。",
+      "panelIndex": 1
+    },
+    "ch02-inside_room-03": {
+      "id": "ch02-inside_room-03",
+      "shot": "戴袖套技术员坐电脑前，顾屿递人员核对表，沈岑靠门看位置登记窗，文字由界面排版避免图内伪证。",
+      "masterId": "ch02-inside_room",
+      "status": "approved",
+      "path": "web/assets/ch02-inside_room.webp",
+      "position": "0% 100%",
+      "size": "200% 200%",
+      "alt": "戴袖套技术员坐电脑前，顾屿递人员核对表，沈岑靠门看位置登记窗，文字由界面排版避免图内伪证。",
+      "panelIndex": 2
+    },
+    "ch02-inside_room-04": {
+      "id": "ch02-inside_room-04",
+      "shot": "特写卡座下露出发黄旧带壳与半截试听标签，许照在画面边缘只用手指暗示，暖桌灯压低神秘感。",
+      "masterId": "ch02-inside_room",
+      "status": "approved",
+      "path": "web/assets/ch02-inside_room.webp",
+      "position": "100% 100%",
+      "size": "200% 200%",
+      "alt": "特写卡座下露出发黄旧带壳与半截试听标签，许照在画面边缘只用手指暗示，暖桌灯压低神秘感。",
+      "panelIndex": 3
+    },
+    "ch02-two_views-01": {
+      "id": "ch02-two_views-01",
+      "shot": "周老师扳转小型CRT显示器给学生看，屏上原始粗格留存与真实监控作为分开显示状态，不画超高清修复。",
+      "masterId": "ch02-two_views",
+      "status": "approved",
+      "path": "web/assets/ch02-two_views.webp",
+      "position": "0% 0%",
+      "size": "200% 200%",
+      "alt": "周老师扳转小型CRT显示器给学生看，屏上原始粗格留存与真实监控作为分开显示状态，不画超高清修复。",
+      "panelIndex": 0
+    },
+    "ch02-two_views-02": {
+      "id": "ch02-two_views-02",
+      "shot": "外景屋檐下固定方盒摄像头，斜向门厅空椅，雨滴串落，明确摄影机拍摄位置。",
+      "masterId": "ch02-two_views",
+      "status": "approved",
+      "path": "web/assets/ch02-two_views.webp",
+      "position": "100% 0%",
+      "size": "200% 200%",
+      "alt": "外景屋檐下固定方盒摄像头，斜向门厅空椅，雨滴串落，明确摄影机拍摄位置。",
+      "panelIndex": 1
+    },
+    "ch02-two_views-03": {
+      "id": "ch02-two_views-03",
+      "shot": "梁弥用铅笔逐格数纸图边缘，许照肩膀挡住一部分后被轻推，沈岑握本子退在旁边。",
+      "masterId": "ch02-two_views",
+      "status": "approved",
+      "path": "web/assets/ch02-two_views.webp",
+      "position": "0% 100%",
+      "size": "200% 200%",
+      "alt": "梁弥用铅笔逐格数纸图边缘，许照肩膀挡住一部分后被轻推，沈岑握本子退在旁边。",
+      "panelIndex": 2
+    },
+    "ch02-two_views-04": {
+      "id": "ch02-two_views-04",
+      "shot": "桌面俯视旧课件软盘盒、带胶布压角的维修安排表、三个各自写字的本子，手部动作各不相同。",
+      "masterId": "ch02-two_views",
+      "status": "approved",
+      "path": "web/assets/ch02-two_views.webp",
+      "position": "100% 100%",
+      "size": "200% 200%",
+      "alt": "桌面俯视旧课件软盘盒、带胶布压角的维修安排表、三个各自写字的本子，手部动作各不相同。",
+      "panelIndex": 3
+    },
+    "ch02-doorway_worker-01": {
+      "id": "ch02-doorway_worker-01",
+      "shot": "楼梯口合唱学生抱谱逆向经过，许照扶栏避开卷边防滑皮，人物是普通课间拥挤。",
+      "masterId": "ch02-doorway_worker",
+      "status": "approved",
+      "path": "web/assets/ch02-doorway_worker.webp",
+      "position": "0% 0%",
+      "size": "200% 200%",
+      "alt": "楼梯口合唱学生抱谱逆向经过，许照扶栏避开卷边防滑皮，人物是普通课间拥挤。",
+      "panelIndex": 0
+    },
+    "ch02-doorway_worker-02": {
+      "id": "ch02-doorway_worker-02",
+      "shot": "雨夜小路手电先出现，韩师傅戴湿软工作帽提工具包和长铁杆，门厅三位学生站屋檐下等待。",
+      "masterId": "ch02-doorway_worker",
+      "status": "approved",
+      "path": "web/assets/ch02-doorway_worker.webp",
+      "position": "100% 0%",
+      "size": "200% 200%",
+      "alt": "雨夜小路手电先出现，韩师傅戴湿软工作帽提工具包和长铁杆，门厅三位学生站屋檐下等待。",
+      "panelIndex": 1
+    },
+    "ch02-doorway_worker-03": {
+      "id": "ch02-doorway_worker-03",
+      "shot": "固定摄像头视角重现维修工弯腰拖工具包、铁杆倚柱的轮廓，保持早前粗格图构图可比对，工人面孔不可作证据。",
+      "masterId": "ch02-doorway_worker",
+      "status": "approved",
+      "path": "web/assets/ch02-doorway_worker.webp",
+      "position": "0% 100%",
+      "size": "200% 200%",
+      "alt": "固定摄像头视角重现维修工弯腰拖工具包、铁杆倚柱的轮廓，保持早前粗格图构图可比对，工人面孔不可作证据。",
+      "panelIndex": 2
+    },
+    "ch02-doorway_worker-04": {
+      "id": "ch02-doorway_worker-04",
+      "shot": "维修工蹲门轴下垫木楔，许照举手电，梁弥捡螺母，沈岑在台阶边写本子，方敏守门看护。",
+      "masterId": "ch02-doorway_worker",
+      "status": "approved",
+      "path": "web/assets/ch02-doorway_worker.webp",
+      "position": "100% 100%",
+      "size": "200% 200%",
+      "alt": "维修工蹲门轴下垫木楔，许照举手电，梁弥捡螺母，沈岑在台阶边写本子，方敏守门看护。",
+      "panelIndex": 3
+    },
+    "ch02-after_bell-01": {
+      "id": "ch02-after_bell-01",
+      "shot": "回到暖光教室的沈岑握凉水杯，数学卷压着干皱抄录，周围同学已低头做题，手部微红。",
+      "masterId": "ch02-after_bell",
+      "status": "approved",
+      "path": "web/assets/ch02-after_bell.webp",
+      "position": "0% 0%",
+      "size": "200% 200%",
+      "alt": "回到暖光教室的沈岑握凉水杯，数学卷压着干皱抄录，周围同学已低头做题，手部微红。",
+      "panelIndex": 0
+    },
+    "ch02-after_bell-02": {
+      "id": "ch02-after_bell-02",
+      "shot": "顾屿在后门递独立观察记录给沈岑，两人有轻微不快，门内许照低头收书，日光灯下绿门磨损。",
+      "masterId": "ch02-after_bell",
+      "status": "approved",
+      "path": "web/assets/ch02-after_bell.webp",
+      "position": "100% 0%",
+      "size": "200% 200%",
+      "alt": "顾屿在后门递独立观察记录给沈岑，两人有轻微不快，门内许照低头收书，日光灯下绿门磨损。",
+      "panelIndex": 1
+    },
+    "ch02-after_bell-03": {
+      "id": "ch02-after_bell-03",
+      "shot": "夜间车棚许照蹲修掉落自行车链条，沈岑打手电照齿盘，两人短暂相视笑，地面湿亮。",
+      "masterId": "ch02-after_bell",
+      "status": "approved",
+      "path": "web/assets/ch02-after_bell.webp",
+      "position": "0% 100%",
+      "size": "200% 200%",
+      "alt": "夜间车棚许照蹲修掉落自行车链条，沈岑打手电照齿盘，两人短暂相视笑，地面湿亮。",
+      "panelIndex": 2
+    },
+    "ch02-after_bell-04": {
+      "id": "ch02-after_bell-04",
+      "shot": "厂门岔路远景，两个骑车身影分别驶向食堂和家属区，雨后烟囱隐入夜色，沈岑帆布包拉链扣紧。",
+      "masterId": "ch02-after_bell",
+      "status": "approved",
+      "path": "web/assets/ch02-after_bell.webp",
+      "position": "100% 100%",
+      "size": "200% 200%",
+      "alt": "厂门岔路远景，两个骑车身影分别驶向食堂和家属区，雨后烟囱隐入夜色，沈岑帆布包拉链扣紧。",
       "panelIndex": 3
     }
   }

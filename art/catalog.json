@@ -1,0 +1,59 @@
+{
+  "masters": [
+    {
+      "id": "ch01-evening_class",
+      "path": "art/masters/ch01-evening_class.png",
+      "webPath": "web/assets/ch01-evening_class.webp",
+      "sha256": "e175acee34c2d7db8890fc201f71c66abb630d93259290a01f8100dde0da41d6",
+      "status": "approved",
+      "promptPath": "art/prompts/ch01-evening_class.json",
+      "review": "Four distinct scene compositions visually inspected for era, anatomy, continuity and readable clue safety."
+    }
+  ],
+  "entries": {
+    "ch01-evening_class-01": {
+      "id": "ch01-evening_class-01",
+      "shot": "雨夜校门到车棚的宽景，沈岑蓝白校服外套内是酒红毛衣，湿裤脚贴踝，远处厂区烟囱隐入雨。",
+      "masterId": "ch01-evening_class",
+      "status": "approved",
+      "path": "web/assets/ch01-evening_class.webp",
+      "position": "0% 0%",
+      "size": "200% 200%",
+      "alt": "雨夜校门到车棚的宽景，沈岑蓝白校服外套内是酒红毛衣，湿裤脚贴踝，远处厂区烟囱隐入雨。",
+      "panelIndex": 0
+    },
+    "ch01-evening_class-02": {
+      "id": "ch01-evening_class-02",
+      "shot": "1997年普通高三教室暖日光灯，顾屿在黑板改倒计时，沈岑用数学卷盖住旧课桌木刺，班级全员不必挤入同镜。",
+      "masterId": "ch01-evening_class",
+      "status": "approved",
+      "path": "web/assets/ch01-evening_class.webp",
+      "position": "100% 0%",
+      "size": "200% 200%",
+      "alt": "1997年普通高三教室暖日光灯，顾屿在黑板改倒计时，沈岑用数学卷盖住旧课桌木刺，班级全员不必挤入同镜。",
+      "panelIndex": 1
+    },
+    "ch01-evening_class-03": {
+      "id": "ch01-evening_class-03",
+      "shot": "近景许照拎空录音机套侧身入座，额角手帕淡血，膝盖撞桌腿，沈岑挪凳子，生活动作自然。",
+      "masterId": "ch01-evening_class",
+      "status": "approved",
+      "path": "web/assets/ch01-evening_class.webp",
+      "position": "0% 100%",
+      "size": "200% 200%",
+      "alt": "近景许照拎空录音机套侧身入座，额角手帕淡血，膝盖撞桌腿，沈岑挪凳子，生活动作自然。",
+      "panelIndex": 2
+    },
+    "ch01-evening_class-04": {
+      "id": "ch01-evening_class-04",
+      "shot": "梁弥转身递纱布，许照在桌下找尺，沈岑擦去卷角歌名；桌面湿杯印与橡皮屑可见。",
+      "masterId": "ch01-evening_class",
+      "status": "approved",
+      "path": "web/assets/ch01-evening_class.webp",
+      "position": "100% 100%",
+      "size": "200% 200%",
+      "alt": "梁弥转身递纱布，许照在桌下找尺，沈岑擦去卷角歌名；桌面湿杯印与橡皮屑可见。",
+      "panelIndex": 3
+    }
+  }
+}

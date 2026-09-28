@@ -1,0 +1,23 @@
+{
+  "title": "第零节晚自习",
+  "author": "大阴希声@UglyNakedGuy",
+  "status": "production",
+  "target": {"chapters":36,"sideStories":12,"endings":6,"uniqueNarrativeHan":320000,"uniquePanels":1280,"approvedMasters":360},
+  "platforms": ["Windows x64 portable exe","GitHub Pages"],
+  "repository": "Cooldrug1981/the-zero-period",
+  "publicationAuthorized": true,
+  "parallelWorkAuthorized": true,
+  "writingSkill": "humanizer",
+  "imageMode": "built-in image_gen",
+  "chapters": [
+    "四十三个到","铃声中间的人","许照的B面","第一份未来记录",
+    "三只钟","封口的信封","走廊最后一格","128字节",
+    "借书卡上的空白","星期天的家属区","罗迟的工牌","零伤亡",
+    "为了大家好","那封告密信","统一步伐","有人借你的名字",
+    "十一分四十四秒","倒着写不完的答案","十二年不是十二分钟","第零节",
+    "谁在那边写字","一张不肯服从的课表","热","全员安全",
+    "两份名单","把证据送出去","顾屿的晚饭","末班车",
+    "不在节目单上","广播里的第三个人","名单以外二十人","还没有发出的那封信",
+    "听见以后怎么办","把名字一个个念出来","最后一个发送者","早上照常上课吗"
+  ]
+}

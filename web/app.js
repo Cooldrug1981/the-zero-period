@@ -1,0 +1,102 @@
+function matches(when,flags){return !when||Object.entries(when).every(([k,v])=>flags[k]===v);}
+function resolveEnding(f){
+ if(f.departure==='leave')return'E';
+ const people=f.roster_workers===true&&f.roster_families===true;
+ const help=['both','radio','teacher'].includes(f.external_contact);
+ if(!people&&f.ground_response!==true&&!help)return'F';
+ if(f.device_policy==='obey')return'B';
+ if(f.device_policy==='watch')return'D';
+ return people&&help&&f.work_delegated===true&&f.ground_response===true&&f.evidence_outside===true&&f.obligations_sent===true?'A':'C';
+}
+function makeModel(story){
+ const S=story, app='the-zero-period',version=2,maxSteps=16000;
+ function blank(){return{app,version,trail:[],decisions:{},flags:{luo_leg_injury:false},evidence:[],updated:Date.now()};}
+ function apply(state,n){for(const [k,v] of Object.entries(n.set||{})){if(['__proto__','constructor','prototype'].includes(k)||!['string','number','boolean'].includes(typeof v))throw Error('Invalid flag');state.flags[k]=v;}for(const e of n.grant||[])if(!state.evidence.includes(e))state.evidence.push(e);}
+ function nextOf(n,v,selected){
+  if(n.kind==='choice'){const o=n.options.find(o=>o.id===selected&&matches(o.when,v.flags));if(!o)throw Error('请先选一项。');return o.next;}
+  if(n.kind==='gate')return matches(n.when,v.flags)?n.yes:n.no;
+  if(n.kind==='departure-router')return v.flags.departure==='leave'?n.yes:n.no;
+  if(n.kind==='ending-router')return n.endings[v.flags.endingId||resolveEnding(v.flags)];
+  return n.next;
+ }
+ const automatic=n=>['apply','gate','resolve','departure-router','ending-router'].includes(n.kind);
+ function enter(v,id){
+  let steps=0;
+  while(id){
+   if(++steps>500||v.trail.length>=maxSteps)throw Error('剧情连接异常。');
+   const n=S.nodes[id];if(!n)throw Error('后续内容尚未完成。');
+   v.trail.push(id);v.node=id;apply(v,n);if(n.kind==='resolve')v.flags.endingId=resolveEnding(v.flags);
+   if(!automatic(n)&&matches(n.when,v.flags))return v;
+   id=nextOf(n,v);
+  }throw Error('剧情没有后续节点。');
+ }
+ function fresh(){return enter(blank(),S.entry);}
+ function advance(state,selected){
+  const v=structuredClone(state),n=S.nodes[v.node];
+  if(['complete','pending'].includes(n.kind))return v;
+  const next=nextOf(n,v,selected);if(n.kind==='choice')v.decisions[n.id]=selected;
+  v.updated=Date.now();return enter(v,next);
+ }
+ function validate(input){
+  if(!input||input.app!==app||input.version!==version||!Array.isArray(input.trail)||!input.trail.length||input.trail.length>maxSteps||!input.decisions||typeof input.decisions!=='object'||Array.isArray(input.decisions))throw Error('这不是当前预览版的有效存档。');
+  const v=blank(),seen=new Set();
+  if(input.trail[0]!==S.entry)throw Error('存档起点不正确。');
+  for(let i=0;i<input.trail.length;i++){
+   const id=input.trail[i],n=S.nodes[id];if(!n)throw Error('此版本缺少存档中的章节。');
+   if(seen.has(id))throw Error('存档存在重复行程。');seen.add(id);v.node=id;v.trail.push(id);apply(v,n);
+   if(n.kind==='resolve')v.flags.endingId=resolveEnding(v.flags);
+   if(i<input.trail.length-1){
+    const selected=input.decisions[id],next=nextOf(n,v,selected);
+    if(next!==input.trail[i+1])throw Error('存档中的选择与后续剧情不符。');
+    if(n.kind==='choice')v.decisions[id]=selected;
+   }else if(automatic(n)||!matches(n.when,v.flags))throw Error('存档停在无效位置。');
+  }
+  if(input.node!==v.node||Object.keys(input.decisions).some(k=>v.decisions[k]!==input.decisions[k]))throw Error('存档有尚未发生的选择。');
+  v.updated=Number.isFinite(input.updated)?input.updated:Date.now();return v;
+ }
+ return{fresh,advance,validate,matches,resolveEnding,key:'the-zero-period-autosave-v2'};
+}
+
+(()=>{
+'use strict';
+const S=window.ZERO_PERIOD,M=makeModel(S),$=s=>document.querySelector(s),app=$('#app'),dialog=$('#panel'),body=$('#panel-body');
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let state=null,selected=null,view='cover',toastTimer,storageOkay=true;
+const preferencesKey='the-zero-period-preferences-v2',slotsKey='the-zero-period-slots-v2';
+function get(key,fallback=null){try{const v=localStorage.getItem(key);return v?JSON.parse(v):fallback;}catch{return fallback;}}
+function put(key,value){try{localStorage.setItem(key,JSON.stringify(value));storageOkay=true;return true;}catch{storageOkay=false;toast('浏览器没有保存成功，请在“存档”中导出文件。');return false;}}
+let prefs={size:21,reduced:window.matchMedia('(prefers-reduced-motion: reduce)').matches,...get(preferencesKey,{})};
+function applyPreferences(){document.documentElement.style.setProperty('--read-size',`${Math.min(28,Math.max(16,Number(prefs.size)||21))}px`);document.body.classList.toggle('reduced',!!prefs.reduced);}
+applyPreferences();
+function toast(text){$('#toast').textContent=text;$('#toast').classList.add('visible');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('#toast').classList.remove('visible'),4000);}
+function show(title,html){$('#panel-title').textContent=title;body.innerHTML=html;if(!dialog.open)dialog.showModal();body.scrollTop=0;}
+$('.close-dialog').onclick=()=>dialog.close();
+dialog.addEventListener('click',e=>{if(e.target===dialog){const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)dialog.close();}});
+const button=(action,label,cl='secondary',extra='')=>`<button class="${cl}" data-action="${action}" ${extra}>${label}</button>`;
+function masthead(reader=false){return `<header class="masthead"><button class="wordmark" data-action="home" aria-label="回到标题页"><span class="seal">零</span><span class="brand-title">第零节晚自习<small class="brand-sub">THE ZERO PERIOD / 1997</small></span></button><nav class="header-actions" aria-label="游戏菜单">${button('chapters','目录','utility')}${reader?button('evidence','笔记','utility'):''}${button('saves','存档','utility')}${button('settings','设置','utility')}</nav></header>`;}
+function hasSave(){return !!get(M.key);}
+function cover(){view='cover';app.innerHTML=`<section class="cover"><div class="cover-bg" style="background-image:url('assets/cover.webp')"></div>${masthead()}<div class="cover-body"><div class="cover-copy"><div class="cover-overline">鹭原 · 1997年秋</div><h1>第<span class="title-zero">零</span>节<br>晚自习<small>THE ZERO PERIOD</small></h1><p class="cover-intro">晚自习还没下课，广播先念了明天的点名册。许照的名字后面，少了一声“到”。</p><div class="chapter-card"><span class="chapter-number">01</span><div class="chapter-copy">${esc(S.chapterTitles[0])}<small>原创科幻悬疑图文小说 · ${esc(S.buildLabel)}</small></div></div><div class="cover-buttons">${button('new','从晚自习开始 <span class="arrow">→</span>','primary')}${hasSave()?button('continue','继续阅读'):''}</div><p class="cover-meta">包含压迫气氛、事故与失去亲人的情节。<br>虚构的逆向通信装置与真实科学知识在阅读附录中分开说明。</p></div></div><footer class="cover-footer"><span>${esc(S.author)} · 独立原创</span><span class="cover-version">${esc(S.buildLabel)}</span>${button('about','阅读说明','cover-help')}</footer></section>`;}
+function save(){return put(M.key,state);}
+function start(){state=M.fresh();selected=null;save();render();}
+function resume(raw){try{state=M.validate(raw);selected=null;save();dialog.close();render();}catch(e){show('存档暂时无法读取',`<p>${esc(e.message)}</p><p>原文件不会被改动。第一章旧试玩版与当前预览版使用不同的剧情结构，旧版存档不能直接导入。</p>`);}}
+function artMarkup(id,large=false){const a=S.art[id];if(!a||a.status!=='approved'||!a.path)return `<div class="frame asset-error" role="img" aria-label="本场画面尚在制作"><span>画面制作中</span></div>`;const path=a.path.replace(/^web\//,'');const pos=a.position||'center';const size=a.size||'cover';return `<button class="frame" data-action="art" aria-label="放大画面：${esc(a.alt||a.shot||'场景插图')}" style="background-image:url('${esc(encodeURI(path))}');background-position:${esc(pos)};background-size:${esc(size)}"><span class="frame-tag">查看画面</span></button>`;}
+function render(){view='reader';const n=S.nodes[state.node],chapter=n.chapter||Math.max(1,...state.trail.map(id=>S.nodes[id]?.chapter||0));const shown=state.trail.filter(id=>['text','choice'].includes(S.nodes[id].kind));const notes=state.evidence.slice(-5).reverse();
+app.innerHTML=`<section class="reader">${masthead(true)}<div class="reading-layout"><div class="story-column"><div class="scene-meta"><span class="chapter-label">第 ${chapter} 章</span><span>${esc(n.location||n.title||'鹭原')}</span><span class="scene-time">${esc(n.time||n.date||'')}</span></div>${artMarkup(n.art)}<div class="frame-caption"><span>${esc(n.scene||n.title||'THE ZERO PERIOD')}</span><span>${esc(S.buildLabel)}</span></div><article class="dialogue-card"><div class="speaker-row"><span class="speaker">${esc(n.speaker||'阅读记录')}</span><span class="page-number">${String(shown.length).padStart(3,'0')}</span></div><p class="story-text">${esc(n.text||'')}</p>${n.kind==='choice'?`<div class="choice-heading">${esc(n.key?.startsWith('offer-')?'支线阅读':'做出选择')}</div><div class="choices">${n.options.filter(o=>M.matches(o.when,state.flags)).map((o,i)=>`<button class="choice${selected===o.id?' selected':''}" data-choice="${esc(o.id)}" aria-pressed="${selected===o.id}"><span class="choice-num">${i+1}</span><span><span class="choice-label">${esc(o.label)}</span><span class="choice-detail">${esc(o.detail)}</span></span></button>`).join('')}</div>`:''}${n.kind==='pending'?'<p class="evidence-note">此处是当前制作边界。存档会保留；这不是全集交付版。</p>':''}${n.kind==='complete'?'<p class="evidence-note">这条路线已读完。可以导出存档，或从之前保存的位置体验其他选择。</p>':''}</article><div class="reader-controls">${button('history','回看','text-button')}<span class="control-hint">空格 / Enter 继续<br>1–9 选择 · Esc 关闭窗口</span>${['pending','complete'].includes(n.kind)?button('home','回到标题页','primary next'):button('next',n.kind==='choice'?'确认选择 →':n.kind==='chapter-end'?'进入下一段 →':'继续 →','primary next',n.kind==='choice'&&!selected?'disabled':'')}</div><div class="saved-line"><span id="save-status">${storageOkay?'已自动保存到此浏览器':'自动保存不可用，请导出存档'}</span><span>已收录 ${state.evidence.length} 条笔记</span></div></div><aside class="journal"><div class="journal-top"><h2 class="journal-title">随身笔记</h2><span class="journal-label">FIELD NOTES</span></div><p class="journal-sub">纸上写下的内容也可能有误。<br>保留原话，另记你的判断。</p><div class="journal-items">${notes.length?notes.map(id=>`<button class="evidence-mini" data-evidence="${esc(id)}"><small>${esc(S.evidence[id].type||'记录')}</small><strong>${esc(S.evidence[id].title)}</strong></button>`).join(''):'<p class="empty-note">还没记下什么。先把这节晚自习上完。</p>'}</div><div class="journal-bottom"><p>第 ${chapter} / 36 章</p><div class="progress-track"><div class="progress-fill" style="width:${(chapter-1)/36*100}%"></div></div>${button('research','阅读附录','text-button')}</div></aside></div></section>`;
+}
+function next(){if(!state)return;try{state=M.advance(state,selected);selected=null;save();render();window.scrollTo({top:0,behavior:prefs.reduced?'instant':'smooth'});}catch(e){toast(e.message);}}
+function evidenceDetail(id){const e=S.evidence[id];if(!e||!state?.evidence.includes(id))return;show(e.title,`<p class="eyebrow">${esc(e.type||'笔记')}</p><p class="notebook-prose">${esc(e.text)}</p>${e.uncertain?`<p class="detail-rule">${esc(typeof e.uncertain==='string'?e.uncertain:'这份记录仍需核实。')}</p>`:''}`);}
+function chapterMenu(){const reached=new Set((state?.trail||get(M.key)?.trail||[]).map(id=>S.nodes[id]?.chapter).filter(Boolean));show('章节目录',`<p>目录显示阅读进度。要重走分支，请读取选择之前的存档，或从头开始。</p><div class="archive-list">${S.chapterTitles.map((title,i)=>`<div class="archive-item"><strong>${String(i+1).padStart(2,'0')} · ${esc(title)}</strong><small>${reached.has(i+1)?'已到达':S.chapters[i+1]?'尚未阅读':'仍在制作'}</small></div>`).join('')}</div>`);}
+function evidenceMenu(){const ids=state?.evidence||[];show('随身笔记',ids.length?`<div class="archive-list">${ids.map(id=>`<button class="archive-item" data-evidence="${esc(id)}"><strong>${esc(S.evidence[id].title)}</strong><small>${esc(S.evidence[id].type||'记录')}</small></button>`).join('')}</div>`:'<p>还没有收录笔记。</p>');}
+function history(){const ids=(state?.trail||[]).filter(id=>['text','choice'].includes(S.nodes[id].kind));show('阅读回看',`<p>只显示已经读过的内容，不改变当前进度。</p>${ids.slice(-160).map(id=>{const n=S.nodes[id];const o=n.options?.find(o=>o.id===state.decisions[id]);return `<section class="history-entry"><small>${esc(n.speaker)} · ${esc(n.scene)}</small><p>${esc(n.text)}</p>${o?`<p class="history-choice">当时选择：${esc(o.label)}</p>`:''}</section>`;}).join('')}`);body.lastElementChild?.scrollIntoView({block:'end'});}
+function saves(){const slots=get(slotsKey,[]);show('存档',`<p>自动存档只保存在当前浏览器或桌面版中。导出文件可以在两者之间转移进度。</p><div class="archive-list">${Array.from({length:6},(_,i)=>`<div class="archive-item"><strong>存档 ${i+1}</strong><small>${slots[i]?esc((S.nodes[slots[i].node]?.title||'阅读记录')+' · '+new Date(slots[i].updated).toLocaleString('zh-CN')):'空位'}</small><div class="dialog-actions">${button('slot-save','保存到这里','secondary',`data-slot="${i}" ${!state?'disabled':''}`)}${button('slot-load','读取','secondary',`data-slot="${i}" ${!slots[i]?'disabled':''}`)}</div></div>`).join('')}</div><div class="dialog-actions">${button('export','导出当前存档','primary',!state&&!hasSave()?'disabled':'')}${button('import','导入存档')}</div>`);}
+function confirmAction(title,text,action,extra=''){show(title,`<p>${esc(text)}</p>${button(action,'确认','primary',extra)}${button('close','取消')}`);}
+function settings(){show('阅读设置',`<label class="setting-row"><span>文字大小<small>修改后立即生效</small></span><select id="font-size">${[16,18,21,24,28].map(n=>`<option value="${n}" ${n===Number(prefs.size)?'selected':''}>${n} px</option>`).join('')}</select></label><label class="setting-row"><span>减少动态效果</span><input id="reduced" type="checkbox" ${prefs.reduced?'checked':''}></label><p class="dialog-footnote">本作不使用文字逐字播放，也没有突然的闪屏效果。画面与内容可以按自己的速度阅读。</p>`);$('#font-size').onchange=e=>{prefs.size=Number(e.target.value);applyPreferences();put(preferencesKey,prefs);};$('#reduced').onchange=e=>{prefs.reduced=e.target.checked;applyPreferences();put(preferencesKey,prefs);};}
+function research(){const chapter=Math.max(0,...(state?.trail||[]).map(id=>S.nodes[id]?.chapter||0));const docs=S.research.filter(d=>d.unlockChapter<=chapter);show('阅读附录',`<p>逆向发送经典信息是本作的虚构前提。后世研究只出现在标有“现代读者说明”的附录中，人物不会引用尚未发表的论文。</p>${docs.length?docs.map(d=>`<section><h3>${esc(d.title)}</h3><p class="eyebrow">${d.dateScope==='modern'?'现代读者说明':'人物所处年代的知识'}</p>${d.paragraphs.map(p=>`<p>${esc(typeof p==='string'?p:p.text)}</p>`).join('')}</section>`).join(''):'<p>相关附录会随章节开放。</p>'}`);}
+function exportSave(){const raw=state||get(M.key);if(!raw)return;const data=M.validate(raw);const url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download=`第零节晚自习-存档-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(url),10000);}
+const actions={home:()=>{dialog.close();cover();},new:()=>hasSave()?confirmAction('重新开始','自动存档会从第一章重新记录。手动存档不受影响；需要保留当前进度时，请先导出。','new-confirm'):start(),'new-confirm':()=>{dialog.close();start();},continue:()=>resume(get(M.key)),next,chapters:chapterMenu,evidence:evidenceMenu,history,saves,settings,research,close:()=>dialog.close(),about:()=>show('阅读说明',`<p>《第零节晚自习》是独立原创作品，故事发生在虚构的鹭原厂办中学。人物、校园与事件均为虚构。</p><p>点“继续”翻页；选择后再点“确认选择”。笔记只收录已发生的事。支线和结局随选择变化，不显示道德评分。</p><p>自动存档与六个手动存档互相独立。清理浏览器数据会删除本地存档，请定期导出。</p><p>${esc(S.buildLabel)}。${S.releaseReady?'本版本已完成内容与交付检查。':'目前仍在制作，目录标有未完成章节；暂不作为全集正式交付。'}</p>`),art:()=>{const n=S.nodes[state?.node];if(S.art[n?.art]?.status==='approved'){dialog.classList.add('art-dialog');show('场景画面',artMarkup(n.art,true));}},export:exportSave,import:()=>$('#import-file').click(),'slot-save':b=>{const i=Number(b.dataset.slot),slots=get(slotsKey,[]);if(!state)return;if(slots[i])confirmAction('覆盖手动存档',`将覆盖存档 ${i+1}。其他存档不受影响。`,'slot-save-confirm',`data-slot="${i}"`);else actions['slot-save-confirm'](b);},'slot-save-confirm':b=>{const slots=get(slotsKey,[]);slots[Number(b.dataset.slot)]=structuredClone(state);if(put(slotsKey,slots)){saves();toast('手动存档已保存。');}},'slot-load':b=>{const raw=get(slotsKey,[])[Number(b.dataset.slot)];if(raw)resume(raw);}};
+dialog.addEventListener('close',()=>dialog.classList.remove('art-dialog'));
+document.addEventListener('click',e=>{const c=e.target.closest('[data-choice]');if(c){selected=c.dataset.choice;render();return;}const ev=e.target.closest('[data-evidence]');if(ev){evidenceDetail(ev.dataset.evidence);return;}const b=e.target.closest('[data-action]');if(b&&!b.disabled)actions[b.dataset.action]?.(b);});
+$('#import-file').onchange=async e=>{const file=e.target.files[0];e.target.value='';if(!file)return;if(file.size>8*1024*1024){toast('存档文件过大，未导入。');return;}try{const raw=JSON.parse(await file.text());const validated=M.validate(raw);show('导入存档',`<p>文件检查通过。读取后将替换自动存档，六个手动存档保持不变。</p>${button('import-confirm','读取这个存档','primary')}${button('close','取消')}`);actions['import-confirm']=()=>resume(validated);}catch(err){toast('未导入：'+err.message);}};
+document.addEventListener('keydown',e=>{if(dialog.open||view!=='reader'||e.ctrlKey||e.altKey||e.metaKey||e.repeat||['BUTTON','INPUT','SELECT','TEXTAREA'].includes(document.activeElement.tagName))return;const n=S.nodes[state.node];if(/^[1-9]$/.test(e.key)&&n.kind==='choice'){const o=n.options.filter(o=>M.matches(o.when,state.flags))[Number(e.key)-1];if(o){e.preventDefault();selected=o.id;render();}}else if([' ','Enter','ArrowRight'].includes(e.key)){e.preventDefault();if(n.kind!=='choice'||selected)next();}});
+cover();
+})();

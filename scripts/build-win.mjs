@@ -1,0 +1,15 @@
+import path from 'node:path';
+import fs from 'node:fs';
+import {pathToFileURL,fileURLToPath} from 'node:url';
+const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
+const local=path.join(root,'node_modules');
+const external=process.env.ZERO_PERIOD_NODE_MODULES;
+const dependency=relative=>[local,external].filter(Boolean).map(dir=>path.join(dir,relative)).find(fs.existsSync);
+const builderPath=dependency('electron-builder/out/index.js');
+const electronPath=dependency('electron/dist/electron.exe');
+if(!builderPath||!electronPath)throw Error('Install development dependencies, or set ZERO_PERIOD_NODE_MODULES to an existing node_modules directory');
+const builder=await import(pathToFileURL(builderPath));
+const electronDist=path.dirname(electronPath);
+if(!fs.existsSync(path.join(root,'web/index.html')))throw Error('Run build first');
+const artifacts=await builder.build({projectDir:root,targets:builder.Platform.WINDOWS.createTarget(['portable','zip'],builder.Arch.x64),publish:'never',config:{electronDist}});
+console.log(JSON.stringify({artifacts,productionComplete:false},null,2));

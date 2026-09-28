@@ -1,0 +1,17 @@
+import fs from 'node:fs';import path from 'node:path';import crypto from 'node:crypto';
+import {fileURLToPath} from 'node:url';
+const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
+const [id,source,chapterId,sceneId]=process.argv.slice(2);
+if(!/^[a-z0-9_-]+$/.test(id||'')||!source||!chapterId||!sceneId)throw Error('Usage: id source chapter-id scene-id; run only after visual approval');
+const doc=JSON.parse(fs.readFileSync(path.join(root,'content/chapters',`ch${String(chapterId).padStart(2,'0')}.json`),'utf8'));
+const scene=doc.scenes.find(s=>s.id===sceneId);if(!scene||scene.art.length!==4)throw Error('Expected four approved panels in a known scene');
+const promptPath=`art/prompts/${id}.json`;if(!fs.existsSync(path.join(root,promptPath)))throw Error('Persist exact generation prompt first');
+const webPath=`web/assets/${id}.webp`;if(!fs.existsSync(path.join(root,webPath)))throw Error('Encode web format first');
+const catalogPath=path.join(root,'art/catalog.json');const catalog=fs.existsSync(catalogPath)?JSON.parse(fs.readFileSync(catalogPath,'utf8')):{masters:[],entries:{}};
+if(catalog.masters.some(m=>m.id===id))throw Error('Existing master preserved');
+const bytes=fs.readFileSync(source),sha256=crypto.createHash('sha256').update(bytes).digest('hex');
+if(catalog.masters.some(m=>m.sha256===sha256))throw Error('Duplicate source image must not inflate counts');
+const masterPath=`art/masters/${id}.png`;fs.mkdirSync(path.dirname(path.join(root,masterPath)),{recursive:true});fs.copyFileSync(source,path.join(root,masterPath),fs.constants.COPYFILE_EXCL);
+catalog.masters.push({id,path:masterPath,webPath,sha256,status:'approved',promptPath,review:'Four distinct scene compositions visually inspected for era, anatomy, continuity and readable clue safety.'});
+scene.art.forEach((a,i)=>{if(catalog.entries[a.id])throw Error('Existing panel preserved: '+a.id);catalog.entries[a.id]={...a,masterId:id,status:'approved',path:webPath,position:['0% 0%','100% 0%','0% 100%','100% 100%'][i],size:'200% 200%',alt:a.shot,panelIndex:i};});
+fs.writeFileSync(catalogPath,JSON.stringify(catalog,null,2));console.log(JSON.stringify({master:id,newPanels:4,totalMasters:catalog.masters.length,totalPanels:Object.keys(catalog.entries).length}));

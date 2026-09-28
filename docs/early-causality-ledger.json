@@ -1,0 +1,193 @@
+{
+  "schemaVersion": 1,
+  "status": "draft",
+  "scope": "已完成第1至7章，后续早段包随写作追加。时间为作者账本精确时刻；角色实际测量有误差，不能倒推为其已知。",
+  "rules": {
+    "offsetSeconds": 704,
+    "minimumSameChannelSendIntervalSeconds": 704,
+    "maxPayloadBytes": 128,
+    "channels": [
+      "A",
+      "B"
+    ],
+    "header": "日期时间、通道、包类型、长度、校验等为固定报头，不挤进图像净载荷。声音皆本地素材，payload不含音频。"
+  },
+  "packets": [
+    {
+      "id": "P01-ROLL",
+      "chapter": 1,
+      "channel": "A",
+      "receiveAt": "1997-10-20T20:28:16",
+      "sendAt": "1997-10-20T20:40:00",
+      "payload": "R|C1|43|43|1111111111111111111111111111111111111111111",
+      "encoding": "ASCII",
+      "netBytes": 54,
+      "status": "received_valid",
+      "source": "20:39:40方敏点名完成，汇总程序20:40发送班级43人到场位表，接收端调用本地姓名/答到音频。"
+    },
+    {
+      "id": "P01-SC-ABSENT",
+      "chapter": 1,
+      "channel": "A",
+      "receiveAt": "1997-10-20T20:40:16",
+      "sendAt": "1997-10-20T20:52:00",
+      "payload": "P|C1|SC|U",
+      "encoding": "ASCII",
+      "netBytes": 9,
+      "status": "received_valid",
+      "source": "20:52教室位置核对，沈岑在广播室不在规定教室；U映射“未归”，非死亡。"
+    },
+    {
+      "id": "P02-MAINT-IMAGE",
+      "chapter": 2,
+      "channel": "B",
+      "receiveAt": "1997-10-20T20:47:00",
+      "sendAt": "1997-10-20T20:58:44",
+      "payload": "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\b\u0000\u0000\u0000\b\u0000\u0000\u0000\b\u0000\u0000\u000e\b\u0000\u0000\u001f\b\u0000\u0000\u001f\b\u0000\u0000\u000e\b\u0000\u0000\u001f\b\u0000\u0000?\b\u0000\u0000\u0018\u0000\u00008\u0000\u0000?(\u0000\u0000\u001f\b\u0000\u0000?\b\u0000\u0000?\b\u0000\u0000?\b\u0000\u0000\u001f\b\u0000\u0000\u001b\b\u0000\u0000\u0019\b\u0000\u0000\u0019\b\u0000\u00001\b\u0000\u00000\b\u0000\u0000`\b\u0000\u0000`\b\u0000\u0000\u0000\b\u0000\u0000\u0000\b\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000",
+      "encoding": "ASCII",
+      "netBytes": 128,
+      "status": "received_valid",
+      "source": "固定北楼摄像头维护图像，32×32一位位图，行优先每行4字节。韩师傅弯腰拖工具包、铁杆靠柱。净载荷无姓名与声音。",
+      "format": "bitmap-1bpp-32x32",
+      "visualConstraint": "低清轮廓不能识别人脸；本数据不新增图片计数。"
+    },
+    {
+      "id": "P04-WORKER-FALL",
+      "chapter": 4,
+      "channel": "A",
+      "receiveAt": "1997-10-21T20:54:16",
+      "sendAt": "1997-10-21T21:06:00",
+      "payload": "EV|N1|W|FALL|HELP",
+      "encoding": "ASCII",
+      "netBytes": 17,
+      "status": "received_valid",
+      "source": "陶桂琴21:06前十几秒绊倒。门边值班员即时选预设事件码，21:06:00确认简报；姓名、伤势、后续处置另补，事件字段按整分。"
+    },
+    {
+      "id": "P04-DO-NOT-PLAY",
+      "chapter": 4,
+      "channel": "A",
+      "receiveAt": "1997-10-21T21:18:16",
+      "sendAt": "1997-10-21T21:30:00",
+      "payload": "CMD|SC|TAPE|DENY_FULL",
+      "encoding": "ASCII",
+      "netBytes": 21,
+      "status": "received_valid",
+      "source": "顾维安得知学生接触旧带后，向值班技术员发出文字要求；短码本地映射“别让沈岑听完整盘带子”。来源第21章才揭晓。"
+    },
+    {
+      "id": "P05-TEST-1",
+      "chapter": 5,
+      "channel": "A",
+      "receiveAt": "1997-10-22T14:08:16",
+      "sendAt": "1997-10-22T14:20:00",
+      "payload": "31",
+      "encoding": "ASCII",
+      "netBytes": 2,
+      "status": "received_valid",
+      "source": "已知短码通路试验；共同校时使该轮不能作为独立时间证据。包存在，但角色证据受限。"
+    },
+    {
+      "id": "P05-TEST-2",
+      "chapter": 5,
+      "channel": "A",
+      "receiveAt": "1997-10-22T14:48:16",
+      "sendAt": "1997-10-22T15:00:00",
+      "payload": "31",
+      "encoding": "ASCII",
+      "netBytes": 2,
+      "status": "received_valid",
+      "source": "已知短码二次测试；独立连续计时证明异常顺序，未知输入与缓存排查仍留第6章。"
+    },
+    {
+      "id": "P06-BLIND-1",
+      "chapter": 6,
+      "channel": "A",
+      "receiveAt": "1997-10-23T08:48:16",
+      "sendAt": "1997-10-23T09:00:00",
+      "payload": "49370618",
+      "encoding": "ASCII",
+      "netBytes": 8,
+      "status": "received_valid",
+      "source": "第一轮：08:52之前封存，08:59之后发送端独立抽取八位内容，09:00发送。"
+    },
+    {
+      "id": "P06-BLIND-2",
+      "chapter": 6,
+      "channel": "A",
+      "receiveAt": null,
+      "sendAt": "1997-10-23T09:20:00",
+      "payload": "72609435",
+      "encoding": "ASCII",
+      "netBytes": 8,
+      "status": "no_valid_receive",
+      "source": "第二轮按计划生成发送；09:08:16附近接收未能稳定锁定，无可靠原始包。",
+      "expectedReceiveAt": "1997-10-23T09:08:16",
+      "receivedPayload": null
+    },
+    {
+      "id": "P06-BLIND-3",
+      "chapter": 6,
+      "channel": "A",
+      "receiveAt": "1997-10-23T09:28:16",
+      "sendAt": "1997-10-23T09:40:00",
+      "payload": "30852147",
+      "encoding": "ASCII",
+      "netBytes": 8,
+      "status": "received_valid",
+      "source": "第三轮有效相符；封存后生成，按20分钟间隔执行。"
+    },
+    {
+      "id": "P06-BLIND-4",
+      "chapter": 6,
+      "channel": "A",
+      "receiveAt": null,
+      "sendAt": "1997-10-23T10:00:00",
+      "payload": "80531962",
+      "encoding": "ASCII",
+      "netBytes": 8,
+      "status": "checksum_failed",
+      "source": "第四轮保存全部乱码及校验失败标记，不当有效包；内容不以之后输入倒填。",
+      "expectedReceiveAt": "1997-10-23T09:48:16",
+      "receivedPayload": "80511962"
+    },
+    {
+      "id": "P06-BLIND-5",
+      "chapter": 6,
+      "channel": "A",
+      "receiveAt": "1997-10-23T10:08:16",
+      "sendAt": "1997-10-23T10:20:00",
+      "payload": "47709306",
+      "encoding": "ASCII",
+      "netBytes": 8,
+      "status": "received_valid",
+      "source": "第五轮有效相符，选项更换接收见证不改变封存与发送端隔离；新增见证为周老师，陈老师继续守发送端。"
+    },
+    {
+      "id": "P06-BLIND-6",
+      "chapter": 6,
+      "channel": "A",
+      "receiveAt": "1997-10-23T10:28:16",
+      "sendAt": "1997-10-23T10:40:00",
+      "payload": "16084273",
+      "encoding": "ASCII",
+      "netBytes": 8,
+      "status": "received_valid",
+      "source": "第六轮有效相符。总六轮四有效相符、一失锁、一校验失败；所有页保留。"
+    },
+    {
+      "id": "P07-BASIN-IMAGE",
+      "chapter": 7,
+      "channel": "B",
+      "receiveAt": "1997-10-23T16:02:16",
+      "sendAt": "1997-10-23T16:14:00",
+      "payload": "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0001\u0000\u0000\u0000\u0001\u0000\u0000\u0000\u0001\u0000\u0000\u0000\u0001\u0000\u0000\u000e\u0001\u0000\u0000\u001f\u0001\u0000\u0000\u001f\u0001\u0000\u0000\u000e\u0001\u0000\u0000\u001f\u0001\u0000\u0000?\u0001\u0000\u0000?\u0001\u0000\u0000?\u0001\u0000\u0000\u0001\u0000\u0000\u0001\u0000\u0000\u001f\u0000\u0000??\u0000\u0000\u001f\u0000\u0000\u000f~\u0000\u0000\u0000<\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000",
+      "encoding": "ASCII",
+      "netBytes": 128,
+      "status": "received_valid",
+      "format": "bitmap-1bpp-32x32",
+      "source": "固定摄像头定时维护回执，丁晓宁在旧楼水池旁因不适坐地。方敏被柱遮，其他协助者在镜头外；图不表示无人援助，不含死亡信息。",
+      "visualConstraint": "初二女生姓名、病因与伤势不能从位图辨认；确认来自当面询问和教师。"
+    }
+  ]
+}

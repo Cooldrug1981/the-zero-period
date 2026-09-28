@@ -1,0 +1,27 @@
+{
+  "name": "the-zero-period",
+  "version": "0.3.0-alpha.1",
+  "private": true,
+  "description": "An original illustrated science-fiction mystery set in Luyuan, 1997",
+  "author": "大阴希声@UglyNakedGuy",
+  "license": "UNLICENSED",
+  "type": "module",
+  "main": "desktop/main.cjs",
+  "scripts": {
+    "audit": "node scripts/audit.mjs",
+    "build": "node scripts/build.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "build:win": "electron-builder --win portable zip --x64 --publish never"
+  },
+  "devDependencies": {"electron":"44.4.3","electron-builder":"26.15.3","playwright-core":"1.63.0"},
+  "build": {
+    "appId":"original.thezeroperiod.game",
+    "productName":"The Zero Period",
+    "directories":{"output":"release/windows"},
+    "files":["web/**/*","desktop/**/*","package.json"],
+    "asar":true,
+    "npmRebuild":false,
+    "win":{"target":["portable","zip"],"artifactName":"The-Zero-Period-${version}-win-${arch}.${ext}","signAndEditExecutable":false,"requestedExecutionLevel":"asInvoker"},
+    "portable":{"requestExecutionLevel":"user"}
+  }
+}

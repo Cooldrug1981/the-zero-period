@@ -1,0 +1,16 @@
+node_modules/
+release/
+qa/
+tmp/
+art/masters/
+.env
+.env.*
+*.log
+*.tmp
+reference/
+*.exe
+*.zip
+*.png
+playwright-report/
+test-results/
+storage-state*.json

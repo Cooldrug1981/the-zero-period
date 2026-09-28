@@ -1,0 +1,4 @@
+import test from 'node:test';import assert from 'node:assert/strict';
+import {makeRelay,initialPackets,validateLedger} from '../src/causality.mjs';
+test('256-hop chain has exact 50h03m44s range and respects two-channel budget',()=>{const p=makeRelay();assert(validateLedger([...initialPackets(),...p]));assert.equal(Date.parse(p.at(-1).sentAt),Date.parse('1997-11-02T22:03:44+08:00'));for(let i=0;i<p.length-1;i++){assert.equal(p[i].sentAt,p[i+1].receivedAt);assert.equal(p[i].payload,p[i+1].payload);}});
+test('reject overbooking, oversized data, 1985 bridging and absent senders',()=>{for(const change of [p=>p.sentAt='1997-10-20T20:41:00+08:00',p=>p.payload='x'.repeat(129),p=>p.sender='',p=>{p.receivedAt='1985-01-01T00:00:00Z';p.sentAt='1985-01-01T00:11:44Z';}]){const p=initialPackets()[0];change(p);assert.throws(()=>validateLedger([p]));}const p=initialPackets()[0];assert.throws(()=>validateLedger([p,{...p,id:'collision'}]));});

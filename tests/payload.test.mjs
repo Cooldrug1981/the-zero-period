@@ -1,0 +1,3 @@
+import test from 'node:test';import assert from 'node:assert/strict';
+import {initialPackets,payloadBytes,validateLedger} from '../src/causality.mjs';
+test('one-bit image is exactly 128 bytes, with no free hidden name/audio payload',()=>{const p=initialPackets().find(p=>p.id==='maintenance-1020');assert.equal(payloadBytes(p).length,128);assert.equal(validateLedger([p]),true);assert.throws(()=>validateLedger([{...p,payload:p.payload+'ff'}]),/large/);assert.throws(()=>validateLedger([{...p,payload:p.payload+'name'}]),/Invalid/);assert.throws(()=>payloadBytes({...p,encoding:'json',payload:{person:'name'}}));});

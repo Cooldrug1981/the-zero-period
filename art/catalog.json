@@ -8,6 +8,51 @@
       "status": "approved",
       "promptPath": "art/prompts/ch01-evening_class.json",
       "review": "Four distinct scene compositions visually inspected for era, anatomy, continuity and readable clue safety."
+    },
+    {
+      "id": "ch01-recorded_attendance",
+      "path": "art/masters/ch01-recorded_attendance.png",
+      "webPath": "web/assets/ch01-recorded_attendance.webp",
+      "sha256": "acf017898f9c31e3459f48a01cd970e63801111b1cc679372a1983de22cdf842",
+      "status": "approved",
+      "promptPath": "art/prompts/ch01-recorded_attendance.json",
+      "review": "Four distinct scene compositions visually inspected for era, anatomy, continuity and readable clue safety."
+    },
+    {
+      "id": "ch01-paper_at_door-v2",
+      "path": "art/masters/ch01-paper_at_door-v2.png",
+      "webPath": "web/assets/ch01-paper_at_door-v2.webp",
+      "sha256": "1a233de173341f6f9db914628b0f07e0aee458fee414de1cd5e943efb9dfd857",
+      "status": "approved",
+      "promptPath": "art/prompts/ch01-paper_at_door-v2.json",
+      "review": "Four distinct scene compositions visually inspected for era, anatomy, continuity and readable clue safety."
+    },
+    {
+      "id": "ch01-paper_custody-v2",
+      "path": "art/masters/ch01-paper_custody-v2.png",
+      "webPath": "web/assets/ch01-paper_custody-v2.webp",
+      "sha256": "080d6765a864ec6d22491a92a8a2b7ea66fa216757dedb04258beb245454c732",
+      "status": "approved",
+      "promptPath": "art/prompts/ch01-paper_custody-v2.json",
+      "review": "Four distinct scene compositions visually inspected for era, anatomy, continuity and readable clue safety."
+    },
+    {
+      "id": "ch01-locked_room-v2",
+      "path": "art/masters/ch01-locked_room-v2.png",
+      "webPath": "web/assets/ch01-locked_room-v2.webp",
+      "sha256": "9560e1842b0ddf88f8a31b23cdcfc518e54e55db4c6701a75ced678c09b556e0",
+      "status": "approved",
+      "promptPath": "art/prompts/ch01-locked_room-v2.json",
+      "review": "Four distinct scene compositions visually inspected for era, anatomy, continuity and readable clue safety."
+    },
+    {
+      "id": "ch01-teacher_rollcall",
+      "path": "art/masters/ch01-teacher_rollcall.png",
+      "webPath": "web/assets/ch01-teacher_rollcall.webp",
+      "sha256": "6d5188f00b3aea0c3e415c360c8a0e01d0238f089699377d12678bd286a4b0c4",
+      "status": "approved",
+      "promptPath": "art/prompts/ch01-teacher_rollcall.json",
+      "review": "Four distinct scene compositions visually inspected for era, anatomy, continuity and readable clue safety."
     }
   ],
   "entries": {
@@ -53,6 +98,226 @@
       "position": "100% 100%",
       "size": "200% 200%",
       "alt": "梁弥转身递纱布，许照在桌下找尺，沈岑擦去卷角歌名；桌面湿杯印与橡皮屑可见。",
+      "panelIndex": 3
+    },
+    "ch01-recorded_attendance-01": {
+      "id": "ch01-recorded_attendance-01",
+      "shot": "仰拍黑板上木壳扬声器，学生同时抬头，暖教室无怪物，以视线变化表现广播异常。",
+      "masterId": "ch01-recorded_attendance",
+      "status": "approved",
+      "path": "web/assets/ch01-recorded_attendance.webp",
+      "position": "0% 0%",
+      "size": "200% 200%",
+      "alt": "仰拍黑板上木壳扬声器，学生同时抬头，暖教室无怪物，以视线变化表现广播异常。",
+      "panelIndex": 0
+    },
+    "ch01-recorded_attendance-02": {
+      "id": "ch01-recorded_attendance-02",
+      "shot": "桌面特写许照将有划痕电子表递到沈岑卷子上，时间20:28:16由可读文字层标注，女孩侧头避反光。",
+      "masterId": "ch01-recorded_attendance",
+      "status": "approved",
+      "path": "web/assets/ch01-recorded_attendance.webp",
+      "position": "100% 0%",
+      "size": "200% 200%",
+      "alt": "桌面特写许照将有划痕电子表递到沈岑卷子上，时间20:28:16由可读文字层标注，女孩侧头避反光。",
+      "panelIndex": 1
+    },
+    "ch01-recorded_attendance-03": {
+      "id": "ch01-recorded_attendance-03",
+      "shot": "沈岑手指碰喉咙看向广播，许照嘴唇闭合、额角按纱布，两人侧面同框，明确本人没有答到。",
+      "masterId": "ch01-recorded_attendance",
+      "status": "approved",
+      "path": "web/assets/ch01-recorded_attendance.webp",
+      "position": "0% 100%",
+      "size": "200% 200%",
+      "alt": "沈岑手指碰喉咙看向广播，许照嘴唇闭合、额角按纱布，两人侧面同框，明确本人没有答到。",
+      "panelIndex": 2
+    },
+    "ch01-recorded_attendance-04": {
+      "id": "ch01-recorded_attendance-04",
+      "shot": "地面圆珠笔在课桌间停住，背景学生仰头不捡，梁弥把掉漆杯盖拧紧，日常小动作承接恐惧。",
+      "masterId": "ch01-recorded_attendance",
+      "status": "approved",
+      "path": "web/assets/ch01-recorded_attendance.webp",
+      "position": "100% 100%",
+      "size": "200% 200%",
+      "alt": "地面圆珠笔在课桌间停住，背景学生仰头不捡，梁弥把掉漆杯盖拧紧，日常小动作承接恐惧。",
+      "panelIndex": 3
+    },
+    "ch01-paper_at_door-01": {
+      "id": "ch01-paper_at_door-01",
+      "shot": "半明半暗水磨石走廊，许照突然站住拦沈岑，门底灯光和露出的窄纸条成为视线焦点。",
+      "masterId": "ch01-paper_at_door-v2",
+      "status": "approved",
+      "path": "web/assets/ch01-paper_at_door-v2.webp",
+      "position": "0% 0%",
+      "size": "200% 200%",
+      "alt": "半明半暗水磨石走廊，许照突然站住拦沈岑，门底灯光和露出的窄纸条成为视线焦点。",
+      "panelIndex": 0
+    },
+    "ch01-paper_at_door-02": {
+      "id": "ch01-paper_at_door-02",
+      "shot": "沈岑蹲下从门缝轻抽两边带孔打印纸，湿纸角粘地，右手捏出新白折痕，具体文字由排版提供。",
+      "masterId": "ch01-paper_at_door-v2",
+      "status": "approved",
+      "path": "web/assets/ch01-paper_at_door-v2.webp",
+      "position": "100% 0%",
+      "size": "200% 200%",
+      "alt": "沈岑蹲下从门缝轻抽两边带孔打印纸，湿纸角粘地，右手捏出新白折痕，具体文字由排版提供。",
+      "panelIndex": 1
+    },
+    "ch01-paper_at_door-03": {
+      "id": "ch01-paper_at_door-03",
+      "shot": "两人站窗台将纸举向忽明的灯，许照用手托边，沈岑眼睛紧盯姓名行，纸字不能额外画死亡暗示。",
+      "masterId": "ch01-paper_at_door-v2",
+      "status": "approved",
+      "path": "web/assets/ch01-paper_at_door-v2.webp",
+      "position": "0% 100%",
+      "size": "200% 200%",
+      "alt": "两人站窗台将纸举向忽明的灯，许照用手托边，沈岑眼睛紧盯姓名行，纸字不能额外画死亡暗示。",
+      "panelIndex": 2
+    },
+    "ch01-paper_at_door-04": {
+      "id": "ch01-paper_at_door-04",
+      "shot": "本子垫窗台计算时间差，旁边杯底水蔓向封皮，许照伸手挡风，门帘与玻璃倒影在背景。",
+      "masterId": "ch01-paper_at_door-v2",
+      "status": "approved",
+      "path": "web/assets/ch01-paper_at_door-v2.webp",
+      "position": "100% 100%",
+      "size": "200% 200%",
+      "alt": "本子垫窗台计算时间差，旁边杯底水蔓向封皮，许照伸手挡风，门帘与玻璃倒影在背景。",
+      "panelIndex": 3
+    },
+    "ch01-paper_custody-01": {
+      "id": "ch01-paper_custody-01",
+      "shot": "窗台旧花盆土印旁摊开原件与草稿，沈岑描纸角缺口，许照手指停在纸外不再触碰。",
+      "masterId": "ch01-paper_custody-v2",
+      "status": "approved",
+      "path": "web/assets/ch01-paper_custody-v2.webp",
+      "position": "0% 0%",
+      "size": "200% 200%",
+      "alt": "窗台旧花盆土印旁摊开原件与草稿，沈岑描纸角缺口，许照手指停在纸外不再触碰。",
+      "panelIndex": 0
+    },
+    "ch01-paper_custody-02": {
+      "id": "ch01-paper_custody-02",
+      "shot": "许照从裤袋拣回揉皱饭票，半截铅笔夹在手中，伤口纱布卷边，家庭背景通过道具表现。",
+      "masterId": "ch01-paper_custody-v2",
+      "status": "approved",
+      "path": "web/assets/ch01-paper_custody-v2.webp",
+      "position": "100% 0%",
+      "size": "200% 200%",
+      "alt": "许照从裤袋拣回揉皱饭票，半截铅笔夹在手中，伤口纱布卷边，家庭背景通过道具表现。",
+      "panelIndex": 1
+    },
+    "ch01-paper_custody-03": {
+      "id": "ch01-paper_custody-03",
+      "shot": "沈岑准备两份抄录，许照在旁核对，原件置中，字句由排版呈现；不假定所有路线教师已经收件。",
+      "masterId": "ch01-paper_custody-v2",
+      "status": "approved",
+      "path": "web/assets/ch01-paper_custody-v2.webp",
+      "position": "0% 100%",
+      "size": "200% 200%",
+      "alt": "沈岑准备两份抄录，许照在旁核对，原件置中，字句由排版呈现；不假定所有路线教师已经收件。",
+      "panelIndex": 2
+    },
+    "ch01-paper_custody-04": {
+      "id": "ch01-paper_custody-04",
+      "shot": "通用收束镜头，本子合起遮住原件或抄录，少女双手护住干纸，广播室门光在她身后。",
+      "masterId": "ch01-paper_custody-v2",
+      "status": "approved",
+      "path": "web/assets/ch01-paper_custody-v2.webp",
+      "position": "100% 100%",
+      "size": "200% 200%",
+      "alt": "通用收束镜头，本子合起遮住原件或抄录，少女双手护住干纸，广播室门光在她身后。",
+      "panelIndex": 3
+    },
+    "ch01-locked_room-01": {
+      "id": "ch01-locked_room-01",
+      "shot": "锁着绿门黄铜把手特写，漆裂露金属，沈岑耳贴门侧倾听，许照站后方忍住说话。",
+      "masterId": "ch01-locked_room-v2",
+      "status": "approved",
+      "path": "web/assets/ch01-locked_room-v2.webp",
+      "position": "0% 0%",
+      "size": "200% 200%",
+      "alt": "锁着绿门黄铜把手特写，漆裂露金属，沈岑耳贴门侧倾听，许照站后方忍住说话。",
+      "panelIndex": 0
+    },
+    "ch01-locked_room-02": {
+      "id": "ch01-locked_room-02",
+      "shot": "风吹布帘引两人后退，许照随即扣上钢窗，展示普通风源，不用超自然变形。",
+      "masterId": "ch01-locked_room-v2",
+      "status": "approved",
+      "path": "web/assets/ch01-locked_room-v2.webp",
+      "position": "100% 0%",
+      "size": "200% 200%",
+      "alt": "风吹布帘引两人后退，许照随即扣上钢窗，展示普通风源，不用超自然变形。",
+      "panelIndex": 1
+    },
+    "ch01-locked_room-03": {
+      "id": "ch01-locked_room-03",
+      "shot": "沈岑替许照把额角纱布卷边按回，少年眯眼躲痛，冷白灯下两人自然近距离。",
+      "masterId": "ch01-locked_room-v2",
+      "status": "approved",
+      "path": "web/assets/ch01-locked_room-v2.webp",
+      "position": "0% 100%",
+      "size": "200% 200%",
+      "alt": "沈岑替许照把额角纱布卷边按回，少年眯眼躲痛，冷白灯下两人自然近距离。",
+      "panelIndex": 2
+    },
+    "ch01-locked_room-04": {
+      "id": "ch01-locked_room-04",
+      "shot": "新纸从门底光缝推出，许照拉沈岑袖口，两人一起低头，远处教室仍灯亮且可见普通学生影子。",
+      "masterId": "ch01-locked_room-v2",
+      "status": "approved",
+      "path": "web/assets/ch01-locked_room-v2.webp",
+      "position": "100% 100%",
+      "size": "200% 200%",
+      "alt": "新纸从门底光缝推出，许照拉沈岑袖口，两人一起低头，远处教室仍灯亮且可见普通学生影子。",
+      "panelIndex": 3
+    },
+    "ch01-teacher_rollcall-01": {
+      "id": "ch01-teacher_rollcall-01",
+      "shot": "方敏俯身查看许照额角伤口，旁边沈岑本子翻扣，教师棕开衫手袖有粉笔灰。",
+      "masterId": "ch01-teacher_rollcall",
+      "status": "approved",
+      "path": "web/assets/ch01-teacher_rollcall.webp",
+      "position": "0% 0%",
+      "size": "200% 200%",
+      "alt": "方敏俯身查看许照额角伤口，旁边沈岑本子翻扣，教师棕开衫手袖有粉笔灰。",
+      "panelIndex": 0
+    },
+    "ch01-teacher_rollcall-02": {
+      "id": "ch01-teacher_rollcall-02",
+      "shot": "课桌上姐姐回忆对应的旧收音机想象插图，童年沈岑举铜丝到窗边，沈芦拧旋钮；标明回忆不可作当前现场。",
+      "masterId": "ch01-teacher_rollcall",
+      "status": "approved",
+      "path": "web/assets/ch01-teacher_rollcall.webp",
+      "position": "100% 0%",
+      "size": "200% 200%",
+      "alt": "课桌上姐姐回忆对应的旧收音机想象插图，童年沈岑举铜丝到窗边，沈芦拧旋钮；标明回忆不可作当前现场。",
+      "panelIndex": 1
+    },
+    "ch01-teacher_rollcall-03": {
+      "id": "ch01-teacher_rollcall-03",
+      "shot": "班车车灯扫过教室天花板，方敏抱册进门，顾屿用鞋尖拨开阻门粉笔头，雨夜仍在窗外。",
+      "masterId": "ch01-teacher_rollcall",
+      "status": "approved",
+      "path": "web/assets/ch01-teacher_rollcall.webp",
+      "position": "0% 100%",
+      "size": "200% 200%",
+      "alt": "班车车灯扫过教室天花板，方敏抱册进门，顾屿用鞋尖拨开阻门粉笔头，雨夜仍在窗外。",
+      "panelIndex": 2
+    },
+    "ch01-teacher_rollcall-04": {
+      "id": "ch01-teacher_rollcall-04",
+      "shot": "点名册铅笔勾与方敏压页手特写，沈岑拿水杯经过，许照跟随；具体43人数交给文字层。",
+      "masterId": "ch01-teacher_rollcall",
+      "status": "approved",
+      "path": "web/assets/ch01-teacher_rollcall.webp",
+      "position": "100% 100%",
+      "size": "200% 200%",
+      "alt": "点名册铅笔勾与方敏压页手特写，沈岑拿水杯经过，许照跟随；具体43人数交给文字层。",
       "panelIndex": 3
     }
   }

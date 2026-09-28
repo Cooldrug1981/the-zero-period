@@ -3,6 +3,8 @@ release/
 qa/
 tmp/
 art/masters/
+art/pending/
+art/pending-review.json
 .env
 .env.*
 *.log

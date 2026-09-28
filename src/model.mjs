@@ -3,7 +3,8 @@ export function resolveEnding(f){
  if(f.departure==='leave')return'E';
  const people=f.roster_workers===true&&f.roster_families===true;
  const help=['both','radio','teacher'].includes(f.external_contact);
- if(!people&&f.ground_response!==true&&!help)return'F';
+ const confirmedLoss=f.ch33_loss_worker==='ma'||f.ch33_loss_family==='child';
+ if(!people&&f.ground_response!==true&&!help&&f.ch31_waited===true&&f.ch33_waited===true&&confirmedLoss)return'F';
  if(f.device_policy==='obey')return'B';
  if(f.device_policy==='watch')return'D';
  return people&&help&&f.work_delegated===true&&f.ground_response===true&&f.evidence_outside===true&&f.obligations_sent===true?'A':'C';
@@ -11,7 +12,7 @@ export function resolveEnding(f){
 export function makeModel(story){
  const S=story, app='the-zero-period',version=2,maxSteps=16000;
  function blank(){return{app,version,trail:[],decisions:{},flags:{luo_leg_injury:false},evidence:[],updated:Date.now()};}
- function apply(state,n){for(const [k,v] of Object.entries(n.set||{})){if(['__proto__','constructor','prototype'].includes(k)||!['string','number','boolean'].includes(typeof v))throw Error('Invalid flag');state.flags[k]=v;}for(const e of n.grant||[])if(!state.evidence.includes(e))state.evidence.push(e);}
+ function apply(state,n){const set=values=>{for(const [k,v] of Object.entries(values||{})){if(['__proto__','constructor','prototype'].includes(k)||!['string','number','boolean'].includes(typeof v))throw Error('Invalid flag');state.flags[k]=v;}};set(n.set);for(const effect of n.effects||[])if(matches(effect.when,state.flags))set(effect.set);for(const e of n.grant||[])if(!state.evidence.includes(e))state.evidence.push(e);}
  function nextOf(n,v,selected){
   if(n.kind==='choice'){const o=n.options.find(o=>o.id===selected&&matches(o.when,v.flags));if(!o)throw Error('请先选一项。');return o.next;}
   if(n.kind==='gate')return matches(n.when,v.flags)?n.yes:n.no;

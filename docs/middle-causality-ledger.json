@@ -1,6 +1,6 @@
 {
   "status":"draft",
-  "scope":"目前写至第18章；后续新增包继续追加。只有下列新增原始包，黑板字及普通通知不当作逆时包。ASCII短码映射固定：SC=沈岑，LC=罗迟，NG=北门，LAC=下层资料柜。ch18两次取反尝试无有效包，不能按收到0登记，详见attempts。",
+  "scope":"中段独立包列至第22章。第24章引用根账本safe-relay-001至safe-relay-256，不在此重复造包。只有下列新增原始包，黑板字及普通通知不当作逆时包。ASCII短码映射固定：SC=沈岑，LC=罗迟，NG=北门，LAC=下层资料柜。ch18两次取反尝试无有效包，不能按收到0登记，详见attempts。",
   "packets":[
     {
       "id":"ch15-north-passage",
@@ -61,7 +61,18 @@
       "sender":"试验前预定固定一的后对照控制程序",
       "meaning":"取反后对照的固定值，恢复有效输出，不把前面无效结果改写。",
       "closure":"ch18/one_control共同主干完成发送，全部选项共同闭合。"
+    },
+    {
+      "id":"ch22-room-confirmation","channel":0,
+      "receivedAt":"1997-10-31T07:40:16+08:00","sentAt":"1997-10-31T07:52:00+08:00",
+      "encoding":"ascii","payload":"ROOM=203;TEACHERS=1;CHECK=ACK",
+      "sender":"方敏在203当面确认，指定工作人员经普通线路送入计量站窗口",
+      "meaning":"原载荷只确认房间内一位教师完成确认，不规定学生人数、课程名称与移动路线。教师方敏在所有分支中均唯一在203现场确认，其他观察教师在门外。",
+      "closure":"ch22/confirmation共同主干07:52发送原样净载荷，未执行备选方案不写成观测过另一历史。"
     }
+  ],
+  "resolvedEarlierPackets":[
+    {"id":"P04-DO-NOT-PLAY","chapter":21,"receivedAt":"1997-10-21T21:18:16+08:00","sentAt":"1997-10-21T21:30:00+08:00","channel":0,"encoding":"ascii","payload":"CMD|SC|TAPE|DENY_FULL","sender":"顾维安普通电话授权，郑姓当班技术员录入并实际发送","meaning":"要求暂缓沈岑听完整旧带，模板省略来源和解释范围，非超自然警告。原日志、值班表、电话登记、操作者署名与顾维安当面确认互核。","note":"引用early账本既有包，不得再计一个新包或重复发送。"}
   ],
   "attempts":[
     {"id":"ch18-negation-1","channel":0,"receiveWindow":"1997-10-29T19:22:00+08:00","plannedSendWindow":"1997-10-29T19:33:44+08:00","receivedValidPayload":false,"sentValidPayload":false,"rule":"有0发1，有1发0，无有效输入不发送；本轮无稳定有效包，非已收到后毁约。"},

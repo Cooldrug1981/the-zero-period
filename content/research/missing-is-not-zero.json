@@ -1,0 +1,15 @@
+{
+  "id": "missing-is-not-zero",
+  "title": "零与未核实的人",
+  "unlockChapter": 25,
+  "dateScope": "modern",
+  "paragraphs": [
+    "现代读者说明：一份只覆盖一百一十七人的名单即使每个字段都被准确传输，也不能证明现场一百三十七个人都安全。作品里的差额是十二名临时技术人员和八名家属。未知去向需要继续核实，不能自动填成零、平安或伤亡。",
+    "数据完整性和测量正确性是不同问题。校验码只能帮助发现传输中的某些改动，无法替没有入表的人补一行，也无法判断原始结论的范围是否合理。故事让人工核人、来源留档和现场救援各自继续进行。",
+    "附录描述的是数据质量的一般原则；鹭原事故、人物及装置均属虚构。"
+  ],
+  "sources": [
+    {"url":"https://www.itl.nist.gov/div898/handbook/ppc/section4/ppc41.htm","description":"美国国家标准与技术研究院统计手册：数据质量检查包含缺失数据与异常录入。"},
+    {"url":"https://www.ibm.com/docs/en/iis/11.5.0?topic=overview-completeness-analysis","description":"IBM 数据完整性分析文档：缺失值与默认值需按字段含义区分。"}
+  ]
+}

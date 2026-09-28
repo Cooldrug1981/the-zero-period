@@ -11,6 +11,10 @@ export const MAINTENANCE_BITMAP_HEX=[
  '840c3021','840c3021','84181821','84381c21','84000021','87ffffe1','80000001','ffffffff'
 ].join('');
 export function payloadBytes(packet){
+ if(String(packet.encoding).toLowerCase()==='ascii'){
+  if(typeof packet.payload!=='string'||/[^\x00-\x7f]/.test(packet.payload))throw Error('Non-ASCII payload '+packet.id);
+  return Buffer.from(packet.payload,'ascii');
+ }
  if(packet.encoding==='hex'){
   if(!/^(?:[0-9a-f]{2})*$/i.test(packet.payload))throw Error('Invalid hexadecimal payload '+packet.id);
   return Buffer.from(packet.payload,'hex');

@@ -26,7 +26,7 @@ export function compileStory({chapters=[],sideStories=[],endings=[],research=[],
    }
    const grants=[];
    for(const e of scene.evidence||[]){if(evidence[e.id]&&JSON.stringify(evidence[e.id])!==JSON.stringify(e))throw Error('Conflicting evidence '+e.id);evidence[e.id]=e;grants.push(e.id);}
-   after=add({id:base+'.record',kind:'apply',set:scene.set||{},grant:grants,next:after});
+   after=add({id:base+'.record',kind:'apply',set:scene.set||{},effects:scene.effects||[],grant:grants,next:after});
    const body=paras(scene.paragraphs||[],after,base,doc,scene,shots);
    first=scene.when?add({id:base+'.gate',kind:'gate',when:scene.when,yes:body,no:join}):body;
   }return first;

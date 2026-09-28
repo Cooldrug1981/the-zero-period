@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "status": "draft",
-  "scope": "已完成第1至7章，后续早段包随写作追加。时间为作者账本精确时刻；角色实际测量有误差，不能倒推为其已知。",
+  "scope": "已完成第1至12章；第8至12章及s01无新增逆传包。时间为作者账本精确时刻；角色实际测量有误差，不能倒推为其已知。",
   "rules": {
     "offsetSeconds": 704,
     "minimumSameChannelSendIntervalSeconds": 704,

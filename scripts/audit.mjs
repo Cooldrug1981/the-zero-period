@@ -7,7 +7,7 @@ async function files(dir){try{return (await fs.readdir(path.join(root,dir))).fil
 const han=t=>(String(t).match(/\p{Script=Han}/gu)||[]).length;
 const seen=new Set();let uniqueHan=0,duplicates=[];
 function countText(t,where){if(typeof t!=='string')return 0;const normalized=t.replace(/\s+/g,'');const n=han(t);if(n>=40&&seen.has(normalized)){duplicates.push(where);return 0;}if(n>=40)seen.add(normalized);uniqueHan+=n;return n;}
-const categories={},problems=[];
+const categories={},problems=[],warnings=[];
 for(const [kind,dir] of [['chapters','content/chapters'],['sideStories','content/side-stories'],['endings','content/endings'],['research','content/research']]){
  const entries=[];
  for(const file of await files(dir)){
@@ -38,9 +38,21 @@ for(const [kind,expected] of Object.entries({chapters:36,sideStories:12,endings:
 if(uniqueHan<plan.target.uniqueNarrativeHan)problems.push(`Narrative Han: ${uniqueHan}/${plan.target.uniqueNarrativeHan}`);
 if(approvedPanels.length<plan.target.uniquePanels)problems.push(`Approved panels: ${approvedPanels.length}/${plan.target.uniquePanels}`);
 if(approvedMasters.length<plan.target.approvedMasters)problems.push(`Approved masters: ${approvedMasters.length}/${plan.target.approvedMasters}`);
-const unreviewed=Object.values(categories).flat().filter(e=>e.status!=='reviewed');if(unreviewed.length)problems.push(unreviewed.length+' content files await editorial review');
+const unreviewed=Object.values(categories).flat().filter(e=>e.status!=='reviewed');
+if(unreviewed.length){
+ if(plan.releaseScope?.editorialReviewRequired===false){
+  if(!plan.releaseScope.acceptedByUser)problems.push('Editorial waiver has no recorded user authorization');
+  warnings.push(unreviewed.length+' unreviewed content files included under the accepted release scope');
+ }else problems.push(unreviewed.length+' content files await editorial review');
+}
+if(plan.originalTarget){
+ warnings.push(`Former illustration target waived: ${approvedPanels.length}/${plan.originalTarget.uniquePanels} panels and ${approvedMasters.length}/${plan.originalTarget.approvedMasters} masters`);
+}
 if(duplicates.length)problems.push(duplicates.length+' repeated long paragraphs excluded from count');
-const report={at:new Date().toISOString(),releaseReady:problems.length===0,target:plan.target,uniqueNarrativeHan:uniqueHan,approvedPanels:approvedPanels.length,approvedMasters:approvedMasters.length,categories,duplicates,problems};
+const report={at:new Date().toISOString(),releaseReady:problems.length===0,target:plan.target,originalTarget:plan.originalTarget||null,releaseScope:plan.releaseScope||null,uniqueNarrativeHan:uniqueHan,approvedPanels:approvedPanels.length,approvedMasters:approvedMasters.length,unreviewedContentFiles:unreviewed.length,categories,duplicates,warnings,problems};
 await fs.mkdir(path.join(root,'qa'),{recursive:true});await fs.writeFile(path.join(root,'qa/production-audit.json'),JSON.stringify(report,null,2));
-console.log(JSON.stringify(report,null,2));
-if(process.argv.includes('--release')&&!report.releaseReady)process.exitCode=1;
+export {report};
+if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url)){
+ console.log(JSON.stringify(report,null,2));
+ if(process.argv.includes('--release')&&!report.releaseReady)process.exitCode=1;
+}

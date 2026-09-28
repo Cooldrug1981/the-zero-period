@@ -25,7 +25,7 @@ export function makeModel(story){
   let steps=0;
   while(id){
    if(++steps>500||v.trail.length>=maxSteps)throw Error('剧情连接异常。');
-   const n=S.nodes[id];if(!n)throw Error('后续内容尚未完成。');
+   const n=S.nodes[id];if(!n)throw Error('存档指向无效的剧情节点。');
    v.trail.push(id);v.node=id;apply(v,n);if(n.kind==='resolve')v.flags.endingId=resolveEnding(v.flags);
    if(!automatic(n)&&matches(n.when,v.flags))return v;
    id=nextOf(n,v);
@@ -39,7 +39,7 @@ export function makeModel(story){
   v.updated=Date.now();return enter(v,next);
  }
  function validate(input){
-  if(!input||input.app!==app||input.version!==version||!Array.isArray(input.trail)||!input.trail.length||input.trail.length>maxSteps||!input.decisions||typeof input.decisions!=='object'||Array.isArray(input.decisions))throw Error('这不是当前预览版的有效存档。');
+  if(!input||input.app!==app||input.version!==version||!Array.isArray(input.trail)||!input.trail.length||input.trail.length>maxSteps||!input.decisions||typeof input.decisions!=='object'||Array.isArray(input.decisions))throw Error('这不是当前正式版的有效存档。');
   const v=blank(),seen=new Set();
   if(input.trail[0]!==S.entry)throw Error('存档起点不正确。');
   for(let i=0;i<input.trail.length;i++){

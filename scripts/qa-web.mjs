@@ -11,6 +11,10 @@ const webRoot=path.join(root,'web');
 const sandbox={window:{}};
 vm.runInNewContext(fs.readFileSync(path.join(webRoot,'story.js'),'utf8'),sandbox);
 const S=sandbox.window.ZERO_PERIOD,M=makeModel(S);
+assert.equal(S.releaseReady,true,'accepted formal scope must pass the release audit');
+assert.equal(S.releaseScope.approvedPanels,48);
+assert.equal(S.releaseScope.approvedMasters,12);
+assert.equal(S.releaseScope.unreviewedContentFiles,57);
 const {chromium}=await import(pathToFileURL('C:/Users/320096551/Pocket-Star-Game/node_modules/playwright-core/index.mjs'));
 
 function traverse(name,choose){
@@ -82,7 +86,9 @@ try{
   page.on('pageerror',e=>errors.push(`${width}: ${e.message}`));
   page.on('response',r=>{if(r.status()>=400)errors.push(`${width}: HTTP ${r.status()} ${r.url()}`);});
   await page.goto(url);
-  assert.match(await page.locator('.cover-version').innerText(),/开发预览版.*制作中/);
+  assert.equal(await page.locator('.cover-version').innerText(),'正式网页版 1.0.0');
+  assert.match(await page.locator('.cover-meta').innerText(),/未配画面的场景仍可阅读/);
+  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,`cover overflow ${width}`);
   await page.getByRole('button',{name:'从晚自习开始'}).click();
   assert.match(await page.locator('.story-text').innerText(),/晚饭/);
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,`reader overflow ${width}`);
